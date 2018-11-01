@@ -35,6 +35,10 @@
 		"Screening_SFH":{"table_id":"20010405","url":"modules/edc/task/short_form_survey_instrument.html","name_for_search":"Screening Short form Health Survey","form_module":"Screening_SFH_form","form_module":"Screening Short Form Health Survey (SF-36)"},
 		"Screening_SFH_form":{"table_id":"20010405","url":"modules/edc/task/short_form_survey_instrument.form.html"},
 
+		"RSQ_D":{"table_id":"20010405","url":"modules/edc/task/RSQ_D.html","name_for_search":"Restorative Sleep Questionnaire (Daily)","form_module":"RSQ_D_Form","task":"Restorative Sleep Questionnaire_ Daily"},
+		"RSQ_D_Form":{"table_id":"20010405","url":"modules/edc/task/RSQ_D_Form.html"},
+		"RSQ_W":{"table_id":"20010405","url":"modules/edc/task/RSQ_W.html","name_for_search":"Restorative Sleep Questionnaire (Weekly)","form_module":"RSQ_W_Form","task":"Restorative Sleep Questionnaire_ Weekly"},
+		"RSQ_W_Form":{"table_id":"20010405","url":"modules/edc/task/RSQ_W_Form.html"},
 
 		"Night_Visit_Date":{"table_id":"20010406","url":"modules/edc/task/Date_of_Visit.html","name_for_search":"Baseline Visit Date"},
 		"Night_Visit_Anthro":{"table_id":"20010407","url":"modules/edc/task/Anthro.html","name_for_search":"Baseline Anthropometry"},
@@ -82,18 +86,18 @@
 		"Morning_KDT":{"table_id":"--------","url":"modules/edc/task/KDT.html","name_for_search":"Morning End Karolinska Drowsiness Test (KDT)"},
 
 
-		"Prac_Evening_Wordpairs_Set1":{"table_id":"20009358","url":"modules/edc/task/Set1_Evening_Wordpairs_Practice.html","name_for_search":"Memory task - Word pairs Set 1","form_module":"Evening Practice Word Pair 1"},
-		"Prac_Evening_Wordpairs_Set2":{"table_id":"20009358","url":"modules/edc/task/Set2_evening_wordpairs_Practice.html","name_for_search":"Memory task - Word pairs Set 1","form_module":"Evening Practice Word Pair 2"},
-		"wordpairs1t1":{"table_id":"20009358","url":"modules/edc/task/Set1_Evening_Wordpairs.html","name_for_search":"Memory task - Word pairs Set 1","form_module":"Evening Word Pair 1"},
-		"wordpairs2t1":{"table_id":"20009358","url":"modules/edc/task/Set2_evening_wordpairs.html","name_for_search":"Memory task - Word pairs Set 2","form_module":"Evening Word Pair 1"},
-		"wordpairs1t2":{"table_id":"20009358","url":"modules/edc/task/Set1_Evening_Wordpairs.html","name_for_search":"Memory task - Word pairs Set 1","form_module":"Evening Word Pair 1"},
-		"wordpairs2t2":{"table_id":"20009358","url":"modules/edc/task/Set2_evening_wordpairs.html","name_for_search":"Memory task - Word pairs Set 2","form_module":"Evening Word Pair 1"},
-		"wordpairs1t3":{"table_id":"20009358","url":"modules/edc/task/Set1_Evening_Wordpairs.html","name_for_search":"Memory task - Word pairs Set 1","form_module":"Evening Word Pair 1"},
-		"wordpairs1t4":{"table_id":"20009358","url":"modules/edc/task/Set1_Evening_Wordpairs.html","name_for_search":"Memory task - Word pairs Set 1","form_module":"Evening Word Pair 1"},
-		"wordpairs2t3":{"table_id":"20009358","url":"modules/edc/task/Set2_evening_wordpairs.html","name_for_search":"Memory task - Word pairs Set 2","form_module":"Evening Word Pair 1"},
-		"wordpairs2t4":{"table_id":"20009358","url":"modules/edc/task/Set2_evening_wordpairs.html","name_for_search":"Memory task - Word pairs Set 1","form_module":"Evening Word Pair 1"},
-		"Morning_word_pair_Set_1":{"table_id":"20009358","url":"modules/edc/task/Set1_Morning_Wordpairs.html","name_for_search":"Memory task - Word pairs Set 1","form_module":"Morning Word Pair 1"},
-		"Morning_word_pair_Set_2":{"table_id":"20009358","url":"modules/edc/task/Set2_morning_wordpairs.html","name_for_search":"Memory task - Word pairs Set 1","form_module":"Morning Word Pair 1"},
+		"Prac_Evening_Wordpairs_Set1":{"table_id":"20009358","url":"modules/edc/task/Set1_Evening_Wordpairs_Practice.html","name_for_search":"Memory task_ Word pairs Set 1","form_module":"Evening Practice Word Pair 1"},
+		"Prac_Evening_Wordpairs_Set2":{"table_id":"20009358","url":"modules/edc/task/Set2_evening_wordpairs_Practice.html","name_for_search":"Memory task_ Word pairs Set 1","form_module":"Evening Practice Word Pair 2"},
+		"wordpairs1t1":{"table_id":"20009358","url":"modules/edc/task/Set1_Evening_Wordpairs.html","name_for_search":"Memory task_ Word pairs Set 1","form_module":"Evening Word Pair 1"},
+		"wordpairs2t1":{"table_id":"20009358","url":"modules/edc/task/Set2_evening_wordpairs.html","name_for_search":"Memory task_ Word pairs Set 2","form_module":"Evening Word Pair 1"},
+		"wordpairs1t2":{"table_id":"20009358","url":"modules/edc/task/Set1_Evening_Wordpairs.html","name_for_search":"Memory task_ Word pairs Set 1","form_module":"Evening Word Pair 1"},
+		"wordpairs2t2":{"table_id":"20009358","url":"modules/edc/task/Set2_evening_wordpairs.html","name_for_search":"Memory task_ Word pairs Set 2","form_module":"Evening Word Pair 1"},
+		"wordpairs1t3":{"table_id":"20009358","url":"modules/edc/task/Set1_Evening_Wordpairs.html","name_for_search":"Memory task_ Word pairs Set 1","form_module":"Evening Word Pair 1"},
+		"wordpairs1t4":{"table_id":"20009358","url":"modules/edc/task/Set1_Evening_Wordpairs.html","name_for_search":"Memory task_ Word pairs Set 1","form_module":"Evening Word Pair 1"},
+		"wordpairs2t3":{"table_id":"20009358","url":"modules/edc/task/Set2_evening_wordpairs.html","name_for_search":"Memory task_ Word pairs Set 2","form_module":"Evening Word Pair 1"},
+		"wordpairs2t4":{"table_id":"20009358","url":"modules/edc/task/Set2_evening_wordpairs.html","name_for_search":"Memory task_ Word pairs Set 1","form_module":"Evening Word Pair 1"},
+		"Morning_word_pair_Set_1":{"table_id":"20009358","url":"modules/edc/task/Set1_Morning_Wordpairs.html","name_for_search":"Memory task_ Word pairs Set 1","form_module":"Morning Word Pair 1"},
+		"Morning_word_pair_Set_2":{"table_id":"20009358","url":"modules/edc/task/Set2_morning_wordpairs.html","name_for_search":"Memory task_ Word pairs Set 1","form_module":"Morning Word Pair 1"},
 
 
 		"KSS1":{"table_id":"20011302","url":"modules/edc/task/kss.html","name_for_search":"Karolinska Sleepiness Scale (KSS)","form_module":"kss_Quest1","form_module":"Karolinska Sleepiness Scale 1.0"},
@@ -103,6 +107,7 @@
 		"KSS3":{"table_id":"20011304","url":"modules/edc/task/kss.html","name_for_search":"Karolinska Sleepiness Scale (KSS)","form_module":"kss_Quest3","form_module":"Karolinska Sleepiness Scale 1.0"},
 		"kss_Quest3":{"table_id":"20011304","url":"modules/edc/task/kss.QUEST.html"},
 		"Morning_Memorytask_Fileupload":{"table_id":"20011341","url":"modules/edc/task/File_upload.html"},
+
 		"quest_list":{
 		   "list":{
 		     "Screening":[
@@ -112,7 +117,9 @@
 		 		{"table_id":"20010401","task_name":"Screening DASS"},
 		 		{"table_id":"20010402","task_name":"Screening Chalder Fatigue Scale"},
 		 		{"table_id":"20010405","task_name":"Screening Short form Health Survey"},
-				{"table_id":"20010404","task_name":"Screening Canadian Consensus Severity Scale"}
+				{"table_id":"20010404","task_name":"Screening Canadian Consensus Severity Scale"},
+				{"table_id":"20010405","task_name":"Restorative Sleep Questionnaire (Daily)"},
+				{"table_id":"20010405","task_name":"Restorative Sleep Questionnaire (Weekly)"}
 		     ],
 			 "Baseline Evening Questionnaires":[
 			   {"table_id":"20010408","url":"modules/edc/task/Flinders.html","task_name":"Flinders Fatigue Scale"}
