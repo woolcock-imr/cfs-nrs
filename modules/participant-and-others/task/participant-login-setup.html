@@ -35,7 +35,7 @@
 			q_list=$vm.module_list[prefix+"quest_list"].list;
 			record=$vm.vm['__ID'].op.input.record;
             $('#Login_ID__ID').val(record.UID+"-"+setup_pid);
-            $('#Participant__ID').val(record.Subject_ID);
+            $('#Participant__ID').val(record.UID);
             $('#Password__ID').val('');
             load_data();
         }
@@ -46,8 +46,9 @@
             var req_data={ cmd:"query_records",sql:sql}
             $VmAPI.request({data:req_data,callback:function(res){
                 if(res.records.length>0){
-                    $('#Login_ID__ID').val(res.records[0].Login_ID);
-                    $('#Password__ID').val(res.records[0].Password);
+                    //$('#Login_ID__ID').val(res.records[0].Login_ID);
+                    $('#Password__ID').val($vm.vm_password(8,false));
+                    if(res.records[0].Password!='') $('#Password__ID').val(res.records[0].Password);
                     $('#List__ID').val(res.records[0].List);
                 }
                 else{
@@ -156,14 +157,16 @@
         })
         //---------------------------------------------
         var add_record=function(row_data,dbv){
-            var req={cmd:"add_json_record",db_pid:setup_pid.toString(),data:row_data,dbv:dbv};
+            //var req={cmd:"add_json_record",db_pid:setup_pid.toString(),data:row_data,dbv:dbv};
+            var req={cmd:"add_record",db_pid:setup_pid.toString(),data:row_data,dbv:dbv};
             $VmAPI.request({data:req,callback:function(res){
 				window.history.go(-1);
             }});
         }
         //---------------------------------------------
         var modify_record=function(row_data,dbv,rid){
-            var req={cmd:"modify_json_record",rid:rid,db_pid:setup_pid.toString(),data:row_data,dbv:dbv};
+            //var req={cmd:"modify_json_record",rid:rid,db_pid:setup_pid.toString(),data:row_data,dbv:dbv};
+            var req={cmd:"modify_record",rid:rid,db_pid:setup_pid.toString(),data:row_data,dbv:dbv};
             $VmAPI.request({data:req,callback:function(res){
 				window.history.go(-1);
             }});
