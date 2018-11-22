@@ -85,8 +85,8 @@
 		"Evening_Wordpairs_S2T3":{"table_id":"91000182","url":"modules/edc/task/Set2_Evening_Wordpairs_T3.html","name_for_search":"Memory_task_Word_pairs_Set_3","form_module":"Morning_Word_Pair_3"},
 		"FTT_12":{"table_id":"91000183","url":"modules/edc/task/finger_tapping_12.html","name_for_search":"Evening Finger Tapping (12 Minutes)","form_module":"FTT_12_form","task":"Evening Finger Tapping Task 12 Minutes"},
 		"FTT_12_form":{"table_id":"91000183","url":"modules/edc/task/finger_tapping_12.form.html"},
-		"FTT_6":{"table_id":"91000183","url":"modules/edc/task/finger_tapping_6.html","name_for_search":"Morning Finger Tapping (6 Minutes)","form_module":"FTT_6_form","task":"Evening Finger Tapping Task 6 Minutes"},
-		"FTT_6_form":{"table_id":"91000183","url":"modules/edc/task/finger_tapping_6.form.html"},
+		"FTT_6":{"table_id":"91000184","url":"modules/edc/task/finger_tapping_6.html","name_for_search":"Morning Finger Tapping (6 Minutes)","form_module":"FTT_6_form","task":"Evening Finger Tapping Task 6 Minutes"},
+		"FTT_6_form":{"table_id":"91000184","url":"modules/edc/task/finger_tapping_6.form.html"},
 
 		"Morning_word_pair_Set_1":{"table_id":"20009358","url":"modules/edc/task/Set1_Morning_Wordpairs.html","name_for_search":"Memory task_ Word pairs Set 1","form_module":"Morning Word Pair 1"},
 		"Morning_word_pair_Set_2":{"table_id":"20009358","url":"modules/edc/task/Set2_morning_wordpairs.html","name_for_search":"Memory task_ Word pairs Set 1","form_module":"Morning Word Pair 1"},
