@@ -75,8 +75,8 @@
 		"Morning_KDT":{"table_id":"91000187","url":"modules/edc/task/KDT.html","name_for_search":"Morning End Karolinska Drowsiness Test (KDT)"},
 
 
-		"Prac_Evening_Wordpairs_Set1":{"table_id":"20009358","url":"modules/edc/task/Set1_Evening_Wordpairs_Practice.html","name_for_search":"Memory task_Word_pairs Set 1","form_module":"Evening_Practice_Word_Pair_1"},
-		"Prac_Evening_Wordpairs_Set2":{"table_id":"20009358","url":"modules/edc/task/Set2_evening_wordpairs_practice.html","name_for_search":"Memory task_Word_pairs_Set_1","form_module":"Evening_Practice_Word_Pair_2"},
+		"Prac_Evening_Wordpairs_Set1":{"table_id":"20009358","url":"modules/edc/task/Set1_Evening_Wordpairs_Practice.html"},
+		"Prac_Evening_Wordpairs_Set2":{"table_id":"20009358","url":"modules/edc/task/Set2_evening_wordpairs_practice.html"},
 		"Evening_Wordpairs_S1T1":{"table_id":"91000177","url":"modules/edc/task/Set1_Evening_Wordpairs_T1.html","name_for_search":"Memory_task_Word_pairs_Set_1"},
 		"Evening_Wordpairs_S1T2":{"table_id":"91000178","url":"modules/edc/task/Set1_Evening_Wordpairs_T2.html","name_for_search":"Memory_task_Word_pairs_Set_2"},
 		"Evening_Wordpairs_S1T3":{"table_id":"91000179","url":"modules/edc/task/Set1_Evening_Wordpairs_T3.html","name_for_search":"Memory_task_Word_pairs_Set_3"},
