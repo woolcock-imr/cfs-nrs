@@ -27,6 +27,17 @@
 				case 'Gender':
                     VmInclude:__COMPONENT__/grid/field_gender.js
                     break;
+                case 'Group':
+                    var html = 
+                        "<select style='border:0;''>\
+                            <option>CFS</option>\
+                            <option>NRS</option>\
+                            <option>INS</option>\
+                            <option>CTRL</option>\
+                        </select>\
+                        ";
+                    VmInclude: __COMPONENT__/grid/field_select.js
+                break;
                 case '_Data_Entry':
                     records[I].vm_custom[field]=true;
                     if(_records[I].UID===undefined) return;
