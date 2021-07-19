@@ -5,7 +5,7 @@
 		<meta charset="utf-8">
 		<meta name='viewport' content='width=device-width, initial-scale=1'>
 		<script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.2.1.min.js"></script>
-        <script>$.ajaxSetup({cache:true});$.get('version.html',function(v){ console.log(v); $vm={}; $vm.ver=v.trim().split(',');$.getScript('index.js?_sv='+$vm.ver[2],function(){vm_init();});},'text')</script>
+        <script>$.ajaxSetup({cache:false});$.get('version.html',function(v){ console.log(v); $vm={}; $vm.ver=v.trim().split(',');$.getScript('index.js?_sv='+$vm.ver[2],function(){vm_init();});},'text')</script>
 	</head>
 	<body></body>
 </html>
