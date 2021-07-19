@@ -79,7 +79,8 @@ var vm_init=function(){
 	//--------------------------------------------------------
 	//load vm framework, vm api and first module
 	var load_vmapi   =function(){ load_js($vm.url('https://vmiis.github.io/api/distribution/vmapi.min.js'),load_vm);	}
-	var load_vm      =function(){ load_js($vm.url('https://vmiis.github.io/framework/distribution/vmframework.min.js'),init);}
+	//var load_vm      =function(){ load_js($vm.url('https://vmiis.github.io/framework/distribution/vmframework.min.js'),init);}
+	var load_vm      =function(){ load_js($vm.url('https://vmiis.github.io/framework/distribution/vmframework.js'),init);}
 	var init         =function(){
 		$vm.init_v3({callback:function(){$vm.init_status=1;}})
 		$vm.load_first_module_to_body({url:'/modules/layout/main.html',callback:last});
