@@ -5,7 +5,7 @@ var vm_init=function(){
 	if(data.length>3000000) localStorage.clear();
 	if(window.location.href.indexOf('?clearcache=1')!=-1){
 		localStorage.clear();
-		alert("Cache is cleard!");
+		alert("Cache is cleared!");
 		return;
 	}
 	//set name space
@@ -82,9 +82,9 @@ var vm_init=function(){
 	//var load_vm      =function(){ load_js($vm.url('https://vmiis.github.io/framework/distribution/vmframework.min.js'),init);}
 	var load_vm      =function(){ load_js($vm.url('https://vmiis.github.io/framework/distribution/vmframework.js'),init);}
 	var init         =function(){
-		$vm.init_v3({callback:function(){$vm.init_status=1;}})
-		$vm.load_first_module_to_body({url:'/modules/layout/main.html',callback:last});
-	}
+	$vm.init_v3({callback:function(){$vm.init_status=1;}})
+	$vm.load_first_module_to_body({url:'/modules/layout/main.html',callback:last});
+}
 	//--------------------------------------------------------
 	var load_js=function(url,next){
         //this is js loader
@@ -115,7 +115,7 @@ var vm_init=function(){
 		text=text.replace(/__HOST__\//g,$vm.hosting_path+'/');
 		text=text.replace(/__VER__/g,$vm.ver[0]);
         if(location.hostname=='127.0.0.1' || location.hostname=='localhost')  text=text.replace(/__COMPONENT__\//g,host+'/vmiis/component/');
-        else text=text.replace(/__COMPONENT__\//g,'https://vmiis.github.io/component/');
+        else text=text.replace(/__COMPONENT__\//g,'https://vmiis.github.io/component-s/');
 		if(window.location.toString().indexOf('_d=1')!=-1){
             //use local system files
 			text=text.replace(/https:\/\/vmiis.github.io\/api/g,host+'/vmiis/api');

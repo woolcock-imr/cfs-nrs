@@ -1,12 +1,13 @@
 {
-	"api_path_development":"https://rt.woolcock.org.au/dev/",
-	"_api_path_development":"https://cbs.wappsystem.com/dev/",
-	
+	"api_path_development": "https://rt.woolcock.org.au/dev/",
+	"_api_path_development": "https://cbs.wappsystem.com/dev/",
 	"api_path_production":"https://rt.woolcock.org.au/pro/",
 	"default_production":"Yes",
     "panels":{
 		"website":		{"url":"","modules":["modules/website/module.json"]},
 		"main":			{"url":"modules/panel/main.html","modules":["modules/participant-and-others/module.json","modules/edc/module.json"]},
-		"main-child":	{"url":"modules/panel/main.child.html",	"modules":["modules/participant-and-others/module.json","modules/edc/module.json"]}
+		"main-child":	{"url":"modules/panel/main.child.html",	"modules":["modules/participant-and-others/module.json","modules/edc/module.json"]},
+		"old-main":			{"url":"modules/panel/old-main.html","modules":["modules/participant-and-others/module.json","modules/edc/module.json"]}
+
 	}
 }

@@ -1,6 +1,7 @@
 <div id=toolbar__ID class="navbar navbar-default">
 	<form class="form-inline">
 		<button type=button id=count__ID class='btn btn-secondary'>Count</button>
+		Non-Restorative Sleep Study
 	</form>
 	<span id=elapsed__ID style='float:right'></span>
 </div>
@@ -196,10 +197,10 @@
 	}
 /*collapsible*/
 .collapsible {
-	background-color:;
+	background-color:transparent;
   color: black;
   padding: 5px;
-  width: 75%;
+  /* width: 100%; */
 	font-weight:500;
   border: none;
   text-align: left;
@@ -215,6 +216,18 @@
 }
 .button{
 	width:380px;
+}
+.collapsible:after {
+  content: '\02795'; /* Unicode character for "plus" sign (+) */
+  font-size: 10px;
+  color: white;
+  float: right;
+  margin-left: 5px;
+	width:100%;
+}
+
+.active:after {
+  content: "\2796"; /* Unicode character for "minus" sign (-) */
 }
 
 
