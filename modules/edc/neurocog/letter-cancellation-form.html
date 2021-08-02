@@ -1,0 +1,515 @@
+<div id=thirdparty_container__ID>
+	<div style="margin : auto; width : 1100px; font-size : x-large; line-height: 2">
+		<div class="col-12 col-lg-12 col-md-12 col-sm-12 mx-auto formbox">
+				<div class="row">
+					<div class="col-12">
+					<!-- form start -->
+					<form id="F__ID">
+						<!-- participant name and study id -->
+						<div id="participant_div__ID">
+							<div class="form-group">
+								<fieldset class="subquestions">
+									<label ><span class="">Participant</span>
+										<input type=text name="Participant" class=form-control id=Participant__ID data-id="Participant"/>
+									</label><br>
+									<label ><span class="">Participant ID</span>
+										<input type=text name="Participant_uid"  id=Participant_uid__ID class=form-control readonly />
+									</label>
+								</fieldset>
+							</div>
+						</div>
+					</form>
+					</div>
+				</div>
+			</div>
+		
+		<div style="height : 50px; margin-top : 20px;">
+			<button class='btn btn-primary btn-lg stop-button' style="float:right; margin-right:100px;">Stop</button>
+			<button class='btn btn-primary btn-lg start-button' style="float:right; margin-right:100px;">Start</button>
+		</div>
+		<canvas id=main_canvas__ID width=1100 height=600 style="margin : auto; display : block;"></canvas>
+		<div id=instructions_1__ID>
+			<div><strong><u>Capital Letters Condition Trial 1</u></strong></div>
+			<div>This task is called a cancellation task.</div>
+			<div>Look for the <strong>CAPITAL LETTERS</strong> on each line.</div>
+			<div><em><strong>Mark</strong></em> each <strong>CAPITAL LETTER</strong> with the left button on the mouse.</div>
+			<div>Go from left to right working as quickly as you can. Try not not miss any.</div>
+			<div>If you make a mistake you can re-click on the letter to remove the cross.</div>
+		</div>
+		<div id=instructions_2__ID>
+			<div><strong><u>Capital Letters Condition Trial 2</u></strong></div>
+			<div>This task is called a cancellation task.</div>
+			<div>Look for the <strong>CAPITAL LETTERS</strong> on each line.</div>
+			<div><em><strong>Mark</strong></em> each <strong>CAPITAL LETTER</strong> with the left button on the mouse.</div>
+			<div>Go from left to right working as quickly as you can. Try not to miss any.</div>
+			<div>If you make a mistake you can re-click on the letter to remove the cross.</div>
+		</div>
+		<div id=instructions_3__ID>
+			<div><strong><u>Spaces Condition Trial 1</u></strong></div>
+			<div>This time - look for the <strong>D O U B L E  S P A C E S</strong></div>
+			<div><strong><em>Mark</em></strong> the letters <strong><u>before</u> AND <u>after</u></strong> the double space with the left button on the mouse.</div>
+			<div>Go from left to right working as quickly as you can.</div>
+			<div>Try not to miss any.</div>
+			<div>If you make a mistake you can re-click on the letter to remove the cross.</div>
+		</div>
+		<div id=instructions_4__ID>
+			<div><strong><u>Spaces Condition Trial 2</u></strong></div>
+			<div>This time - look for the <strong>D O U B L E  S P A C E S</strong></div>
+			<div><strong><em>Mark</em></strong> the letters <strong><u>before</u> AND <u>after</u></strong> the double space with the left button on the mouse.</div>
+			<div>Go from left to right working as quickly as you can.</div>
+			<div>Try not to miss any.</div>
+			<div>If you make a mistake you can re-click on the letter to remove the cross.</div>
+		</div>
+		<div id=instructions_5__ID>
+			<div><strong><u>Dual Condition Trial 1</u></strong></div>
+			<div>This time you have both tasks to do at once.</div>
+			<div><strong><em>Mark</em></strong> the <strong>CAPITAL LETTERS</strong> and the letters <strong><u>before</u> AND <u>after</u></strong> the <strong>D O U B L E  S P A C E S</strong> with the left button on the mouse.</div>
+			<div>Go from left to right working as quickly as you can.</div>
+			<div>Try not to miss any.</div>
+			<div>If you make a mistake you can re-click on the letter to remove the cross.</div>
+		</div>
+		<div id=instructions_6__ID>
+			<div><strong><u>Dual Condition Trial 2</u></strong></div>
+			<div>This time you have both tasks to do at once.</div>
+			<div><strong><em>Mark</em></strong> the <strong>CAPITAL LETTERS</strong> and the letters <strong><u>before</u> AND <u>after</u></strong> the <strong>D O U B L E  S P A C E S</strong> with the left button on the mouse.</div>
+			<div>Go from left to right working as quickly as you can.</div>
+			<div>Try not to miss any.</div>
+			<div>If you make a mistake you can re-click on the letter to remove the cross.</div>
+		</div>
+		<div id=instructions_7__ID>
+			<div><strong><u>Processing Speed Condition</u></strong></div>
+			<div>In this final task - </div>
+			<div><strong><em>Mark</em></strong> both the <strong>CAPITAL LETTERS</strong> and the letters <strong><u>before</u> AND <u>after</u></strong> the <strong>D O U B L E  S P A C E S</strong> with the left button on the mouse.</div>
+			<div>This time complete the entire page as quickly and accurately as possible.</div>
+			<div>Go from left to right working as quickly as you can without missing any.</div>
+			<div>If you make a mistake you can re-click on the letter to remove the cross.</div>
+			<div>When you finish <strong>click 'Stop'</strong></div>
+		</div>
+	</div>
+</div>
+<script>
+	function F__ID(){
+		//-------------------------------------
+			
+		    VmInclude: __COMPONENT__/grid/form.v3.js
+        VmInclude: __CURRENT_PATH__/task.form.js
+        _json = '';
+		VmInclude:__CURRENT_PATH__/shared-form.js
+		//-------------------------------------
+		$('#content').css('padding-top','0');
+		$('#header_0').hide();
+		$('body').css('background','white');
+		var intervals = [];
+		//------------------------------------
+		var this_module=$vm.module_list[$vm.vm['__ID'].name];
+		//------------------------------------
+		$('#D__ID').on('load',function(){
+			$('#header').hide();
+			$('#footer').hide();
+			$('#participant_div__ID').hide()
+			$('#thirdparty_container__ID').css('height',$vm.min_height);
+			third_party("thirdparty_container__ID",data_process);
+		})
+		//------------------------------------
+		var ClearIntervals = function()
+		{
+			for (var i=0; i<intervals.length; i++)
+			{
+				clearTimeout(intervals[i]);
+			}
+			intervals = [];
+		}
+		//------------------------------------
+		$('#D__ID').on('unload',function(){
+			//alert('unload');
+			ClearIntervals();
+		})
+		//------------------------------------
+		var calc=function(data){
+			var dur=data.Duration.split(',');
+			var hits = data.Hits.split(",");
+			var omis = data.Omissions.split(",");
+			var comm =	data.Commissions.split(",");
+			data.duration_0=dur[0];data.hits_0=hits[0];data.omissions_0=omis[0];data.commissions_0=comm[0];
+			data.duration_1=dur[1];data.hits_1=hits[1];data.omissions_1=omis[1];data.commissions_1=comm[1];
+			data.duration_2=dur[2];data.hits_2=hits[2];data.omissions_2=omis[2];data.commissions_2=comm[2];
+			data.duration_3=dur[3];data.hits_3=hits[3];data.omissions_3=omis[3];data.commissions_3=comm[3];
+			data.duration_4=dur[4];data.hits_4=hits[4];data.omissions_4=omis[4];data.commissions_4=comm[4];
+			data.duration_5=dur[5];data.hits_5=hits[5];data.omissions_5=omis[5];data.commissions_5=comm[5];
+			data.duration_6=dur[6];data.hits_6=hits[6];data.omissions_6=omis[6];data.commissions_6=comm[6];
+			data.Average_Hits=((parseInt(data.hits_0)+parseInt(data.hits_1)+parseInt(data.hits_2)+parseInt(data.hits_3)+parseInt(data.hits_4)+parseInt(data.hits_5))/6).toFixed(1);
+			data.Average_Omissions=((parseInt(data.omissions_0)+parseInt(data.omissions_1)+parseInt(data.omissions_2)+parseInt(data.omissions_3)+parseInt(data.omissions_4)+parseInt(data.omissions_5))/6).toFixed(1);
+			data.Average_Commissions=((parseInt(data.commissions_0)+parseInt(data.commissions_1)+parseInt(data.commissions_2)+parseInt(data.commissions_3)+parseInt(data.commissions_4)+parseInt(data.commissions_5))/6).toFixed(1);
+		}
+		//------------------------------------
+		var data_process=function(data){
+			//alert(JSON.stringify(data));
+			calc(data)
+			data.Participant=$('#Participant__ID').val();
+			data.Participant_uid=$("input[name='Participant_uid']").val();
+			data.sysStatus='#00FF00';
+			$vm.request({cmd:"insert",table:m.Table,data:data},function(res){
+				if(res.status=="np"){
+					alert("No permission to insert a new record in to the database.");
+					if(m.input.goback!=undefined){
+						$vm.refresh=1;
+						window.history.go(-1);       //from grid
+					}
+					return;
+				}
+				else { 
+					$vm.refresh=1;
+					window.history.go(-1);
+				}
+			});
+		}
+		//------------------------------------
+		var third_party=function(containerID,callback)
+		{
+			$('.stop-button').hide();
+			$('.start-button').hide();
+			ClearIntervals();
+			$('#'+containerID).css('background-color','#ffffff');
+			var canvas = document.getElementById('main_canvas__ID');
+			var ctx = canvas.getContext('2d');
+			var practice = false;
+			var instructions = [
+								"#instructions_1__ID",
+								"#instructions_2__ID",
+								"#instructions_3__ID",
+								"#instructions_4__ID",
+								"#instructions_5__ID",
+								"#instructions_6__ID",
+								"#instructions_7__ID",
+								];
+			var timelimit = 60000;
+			var timeLimits = [
+								timelimit,
+								timelimit,
+								timelimit,
+								timelimit,
+								timelimit,
+								timelimit,
+								0,
+								];
+			var testConditions = ["c","c","s","s","cs","cs","cs"];
+			var letters = [
+							 ["urCs iVpioTxorEdaq siHeEoukT ksaQx KwkeL","IsS eruNqnU krasxCbLwbIabRxfvqbXr T tdke",
+							  "cQbahUxAuiSwRhxpfhik MbkPzgtZw iv H Npaa","ZnuuUa gRriicAll hEh klZgKwBqjEZ rnqcquj",
+							  "srZgeNb Xquh bPaiqNxfv m vDuNvkiDxPrFfyg","lvstNyeLgu UAtr tovhufAcgF oI qOqvZngaDm",
+							  "w McXkAgnDxIhaelQbwng cwUh dyUmphZDuog l","mwGjiynbYjlsvKrSfQuqcJ hcSm mPpAos vLr r",
+							  "hvsc NoR pI aznvVybapvvL pQVsGghjlsDiRyt","h swugd aBZvpdnYq FXiicce jskOnSvPunqBMv",
+							  "yg pGzZtXalHsuWxiEybzmzxFX z z rNzhctePi","auHaMjzl gasUr hF ObtesTdoXzVmVj hIwfspj",
+							  "tJfjR rmqxXjl NvNqrmc JdceHcX hbmjMzegLy","cuyIiksFzOvBoPbofbqk e ekZvNyg lLmFOdi c",
+							  "DyzD ku yvpWzv RpZmbnaHjHVftgPzigttMxz s","wIqB bxnMidOwaJxpxgsi syQovY rzqNtarA Ef",
+							  "giZcnerl Ajx WpPFn jzauuefyYcbAocqBvBZ b","dvPcdfF fQNam wnVrmipobjIzbX tePjkYwma V",
+							  "wsIwkRl BteyEpQhfrvu UsbsDzawe TD bjvhUs","hzOHqzD hvoxipPt C ejeABrgk ccBqvnUbnuQx"],
+							 ["wbiLmpp I cgmrAfvIZadfj rycZMeFh wkswXiD","Gnpdt Uvlh ZhEtbvSm xbcsFyzkbIvrE QcuNik",
+							  "oxkGeXtcOjWil rRs rokLziftxcin ShZVzy fW","tvXLxualYu nqHsxNorhjsGs Bzdt DT abdfdBh",
+							  "c ByvxaMaqmvZLwzFgxllA Rr jWpHvR rybvyeu","ujTbqAfwrQinb naA JclWpXgiWxagGy heLw gi",
+							  "y Bs qT ozGsvoNxgRepumqQzZDaRfrdoh gtMzv","wTy dd oHnW vX izvDlqnbqheyTkmoIfavKhWzS",
+							  "idC fJnuRf dAiMfjjmlfr bDptTamV vdSyzcSm","wjYyF bdfVlplUb OpwoumQlitHk iFyuLb fFvg",
+							  "EztvsnM idSlMppDrjc uvgAjirEn qmY kvAlzG","SxhmwWxoJr Bypvy GqeivrOjCczBH mryG ojnu",
+							  "b hb KtWZojamqmjQXv chNc cilDzaVrCLiywuc","fPEjkNR nliWcjgojz mlH pnDjvrtEztJzdtZ a",
+							  "gCcga kJPbbyf f VXgzjsoev adVuZnnjVdJhNz","JClfpiBYajzjc Spdndmm fKcQmFio lgcP aLum",
+							  "QyjgUxf DngnFfRc ju izG jXdQojvQkuZpdrop","iBoeoFL Ra vvhIfugoyrxu Wr RhftrhlivZHtM",
+							  "QsTixebFwJrq iNlow tb jywJm kbSphDiXekPv","Bnz fIobhRgi YzxAmflzxhHkYThszkI jcF qfn"],
+							 ["OajlPAy xxNfjV dqwzlrfSWooFyvr s YGnexby","w uYSUdcaxqTjcgqgozxgeMtWzg V evNdXru zB",
+							  "ZcnsheK ryWOcrY lZQjmxsgivVfo Cxffzz Rwc","qXcfa vjhYh aEmDdfOcjjmRzm bRagscSym zGU",
+							  "yckbC lyykyfmb iuqntinvvyxTL LSmMZNQt hW","j VCavzMktMoEifkdl w tcyBaML decwMldRgbw",
+							  "dybr vdXgsSigXfYWhe rT WcpUnTXujbw zbzdj","VwjtNru grkUxC Ym mglM gIfxgNuuuyZyfeQzl",
+							  "oUsdgvoktNYpKcO yLhacnh r mmKYxPh rzYkbc","EhZvyuqCtwXud jzYkgqbAg cVaYwejZ r Sixyk",
+							  "wgiWdo D QJeohmln kobMrVrm EfzUukykmVbxS","dbvzV dqerid guKwLGKjyrcreAkL ilSpvTt kZ",
+							  "KLqt XukGfzr kohjwwzgyvahabfBE pvNIbYa P","R slrfvArdm ezQpaniaPimNjg Il EwGorwBjTx",
+							  "kgaDp dvSNqztqJU ta ewabcrniv xfeNLCuKUf","Lsgan s EIQfshTeIbsckj dmlczkH stqriSRCe",
+							  "djeQ nezedAhMwjY QglrcwS QgfeqsU WzZdmnj","ycB bciGLecXG iZcUuTplbn wiwcpkbPkuit iG",
+							  "mzvtzvgnxxz LlJhkR jNm DDbDheumOm atyyBT","eaMH mCu mveayazkaAiBcjUdJb zAwUuko znbP"],
+							 ["t o JxMzmKyRzlawr dvHtaumEksmEwE zMVrbPp","xaXgpnaEQ lbzIomX guxblqoDijKs xllkTD Qr",
+							  "rvZty j sniorcyHqjyEMYnSqvgAv RixmM xpUe","otrpUm llgyla veENBQwFMk usynIa ZyvnznYp",
+							  "lKbr tAmtLAGaoczh pSDbtVyvE jhgiJ hjnndo","bOvfD tyhvPpvodNpeKM tneZ b AyTwrSovdlqr",
+							  "MfrjYnSu lazkmVAcGNwyApfxqa youy a FNssh","l eqb wx sMzhlfXfhBnojygLZVaw uCfGjhSeIo",
+							  "Ktlrk iZuZqlwwaLk wiJmjl vq EkrOusVgHjTq","ekYiNxIsmkpEt YKdgtexefhN SqmqqGeuw Vu v",
+							  "jcRr iaxhgRs bEjw jzPB vaXjtXfDhoZemvmQh","cerEocx dMkcL cxovBGA R gnGgzvrDfrnlyAbt",
+							  "bxxR yr bVGbfrymccpcL WkSbJQSoazMq yplye","huzhvjwu go PxuWXnlriBql UUpNxPvazF Nnde",
+							  "Rvc ed Rrqdxt NjOVCuiitLdRe LumsclcjUyro","eeUQ fbEnaOtvvbMpFghOeesbZch E obkdyMc p",
+							  "y mgyAiwkiQ kronoylopRKJDiMqv cSbSrd Blq","gaYnUsAgvcSdiqkpHWrGq t fty yYnmwzvMD vx",
+							  "ymDB ab dEhpSp GsfhnNQrj nzbHDyqhlRwophq","pcp ggiYKFunwSj jhrytYruTd lWuiQ buWubKq"],
+							 ["uSGulxg vz puQggWuOljWuu G ujYzRcudEhqaw","cjHmkKlHxwGwbu quy Lwo Tpb PvzSuIwfdrBco",
+							  "Ab x BipymfghiqdTzUawJiK DmjwczWOccn xcL","rJmkFj vNtxtvFUfrndkfzrAZ SueN cacGx wmq",
+							  "bnLI nnkxoMffa b JntkGgbetPeRwtwJ fFvvTe","tb n IugzLwvW akikLenhlBicXisasmbQz WRJc",
+							  "zWkeImifwprRho qPnZ c QbmbRfbjhxo GKccXh","kShQeJho mK DqngrqBhv daxxl nrKlePumNgCb",
+							  "o WvjrXlelfeCo cjVbdA TfCdaTcaN rjkqQroj","wOvCkaYFxinNcnIgd hxyQ WkhQt plHj hyreif",
+							  "lr WygU ddCzgnnovUwAyanwKZmhnQt d BMpaxj","tMglNusi Kjp vgdYsn yaty dTnlysBxCuFrGyX",
+							  "vGlEeKukNri cWfhbtvksogguu WE fTcW Bycve","fGjhm WoQeiO drjLcYom zKzddwqd AbeOanIsk",
+							  "aesDKbfPkLkhLzSePoXq mm g Q ximccntahuMq","pWmnQosRs zyfhT xrQg CzRtdp uksczjOsgTpG",
+							  "GpnswfgPNbf unUwTvBug domwW clGsWatxXn f","qLNz HasbyRm KjPyogtTcRheybdq uE suYcfnv",
+							  "pKFpr r PhojiKyssGjttvyQ foRqPcyve CwfBu","Pv qvGn elyc rzbsujwdpdcdVeZOyIbXJ AgzOa"],
+							 ["udqCgbpxFnM Ui wt ejbmlt cqzYnvEngBsXRzT","uOrwPgjZeLlflTqaj xR VntlwgsahGq fcrG Am",
+							  "sUo h wnpkFxMkyrFxNqav iEFmlUdRtidwhf As","JGforz M yStrMiyXywytfp bJErJcFoedtd jgc",
+							  "sFgdxrcH ombu zGxkIWssMgRj ntBhqQrywN zj","eSwqZw IxBwhutm Mrovm jnqwXhXyhaogmUzM O",
+							  "bGp Zqb lpkJjxn ovfszXvwJuAeQbp AXlfHfat","Zj iiUbkAurTbgTlzpqdH i udEiYnaiiRnnk Rq",
+							  "cLz qvkGiu codbvNCmzyss tOyaIdtX OHuGncm","ri koQjmGZuDxMkdpxow PsgUlg wM slYsTmant",
+							  "rAexj jy qshiC wsfPehcQ dXxrbBYoTuEqjhZl","lWqEpsAVwWIcrgVmuf eaytrxpZmU mnRdz e og",
+							  "th pnhckefo z LTqDtmOvkFroNwuFkJsmDiFi w","ij Ju dAlhtpba UwhrMsgoPvWdqUitQemJhs fK",
+							  "ui jaPtLeolyxRrP nzPriQwKozHcx ktlo KjCy","Lnq mcjk vd WmhivzIfj wntpLWhPazNhueOuZT",
+							  "YavjDFscmwKnmtgEz skuVoh Z wO dsNywYynqk","dw gYvVRjwHomk fzrXbcoWIk zygCaih fqynRM",
+							  "C eBhoCauutDszCfFsDmpKs zov QusOyrjb zrs","gL k ktFZceCxMfkrhuaX yWhefB CbXuswqbrht"],
+							 ["vGlEeKukNri cWfhbtvksogguu WE fTcW Bycve","fGjhm WoQeiO drjLcYom zKzddwqd AbeOanIsk",
+							  "aesDKbfPkLkhLzSePoXq mm g Q ximccntahuMq","pWmnQosRs zyfhT xrQg CzRtdp uksczjOsgTpG",
+							  "th pnhckefo z LTqDtmOvkFroNwuFkJsmDiFi w","ij Ju dAlhtpba UwhrMsgoPvWdqUitQemJhs fK",
+							  "ui jaPtLeolyxRrP nzPriQwKozHcx ktlo KjCy","lnq mcjk vD WmhivzIfj wntpLWhPazNhueOuZT",
+							  "GpnswfgPNbf unUwTvBug domwW clGsWatxXn f","qLNz HasbyRm KjPyogtTcRheybdq uE suYcfnv",
+							  "pKFpr r PhojiKyssGjttvyQ foRqPcyve CwfBu","Pv qvGn elyc rzbsujwDpdCdVezoyIbXJ AgzOa",
+							  "YavjDFscMwKnmtgEz skuVoh z wO dsNywYynqk","dw gYvVRjwHomk fzrXbcoWIk zygCaiH Fqynrm",
+							  "C eBhoCauutDszCfFsDmpKs zov QusOyrjb zrs","gL k ktFZceCxMfkrhuAx yWhefb cbXusWqbRht",
+							  "o WvjrXleLfeCo CjVbda TfCdatcaN rjkqQroj","wOvCkaYFxinNcnIgd hxyQ WkhQt plHj hyreif",
+							  "lr WygU ddCzgnnovUwAyanwKZmhnQt d BMpaxj","tMglnusi Kjp vgdYsn yatY dTnlysBxCuFrGyX"]
+						  ];
+			var marks = [];
+			var current = 0;
+			var startTime;
+			var width = canvas.width;
+			var height = canvas.height;
+			var midX = width / 2;
+			var midY = height / 2;
+			var separation = 140;
+			var finished = false;
+			var mouseDrag = {x:0, y:0};
+
+			var correct = 0;
+			var missed = 0;
+			var wrong = 0;
+			var results = {
+				Time : [],
+				Correct : [],
+				Missed : [],
+				Wrong : [],
+			};
+			var mouse = {x:0, y:0};
+			var mouseOver = false;
+			var rects = [];
+			instructions.forEach(function(i) { $(i).hide(); });
+			ctx.clearRect(0, 0, width, height);
+			ctx.fillStyle = 'rgb(0,0,0)';
+			ctx.textAlign = 'center';
+			ctx.textBaseline = 'middle';
+			ctx.font = '48px arial';
+			function Instructions()
+			{
+				$('#main_canvas__ID').hide();
+				$('.stop-button').hide();
+				$('.start-button').show();
+				$(instructions[current]).show();
+			}
+			function Start()
+			{
+				$('.start-button').hide();
+				$('#participant_div__ID').css("visibility", "hidden");
+				$(instructions[current]).hide();
+				$('#main_canvas__ID').show();
+				marks = [];
+				Update();
+				timelimit = timeLimits[current] / (practice ? 2 : 1);
+				if (timeLimits[current] > 0)
+				{
+					intervals.push(setTimeout(Finish, timelimit));
+				}
+				else
+				{
+					$('.stop-button').show();
+					startTime = Date.now();
+				}
+			}
+			function Dist(x, y)
+			{
+				return Math.sqrt(x*x + y*y);
+			}
+			function Update()
+			{
+				mouseOver = false;
+				ctx.clearRect(0, 0, width, height);
+
+				if (finished)
+					return;
+				correct = 0;
+				missed = 0;
+				wrong = 0;
+				var checkCase = testConditions[current].includes("c");
+				var checkSpace = testConditions[current].includes("s");
+				var ox = 50;
+				var oy = 50;
+				var cw = 25;
+				var ch = 20;
+				var hcw = cw / 3;
+				var hch = ch / 3;
+				ctx.fillStyle = 'black';
+				ctx.textAlign = 'center';
+				ctx.textBaseline = 'middle';
+				ctx.font = '14px Lucida Console';
+				ctx.lineWidth = 1;
+				ctx.strokeStyle = 'rgb(255,0,0)';
+				var ltrs = letters[current];
+				var i = 0;
+
+				var rows = practice ? ltrs.length / 2 : ltrs.length;
+				for (var r=0; r<rows; r++)
+				{
+					var row = ltrs[r];
+					for (var c=0; c<row.length; c++)
+					{
+						var l = row[c];
+						var x = ox + c*cw;
+						var y = oy + r*ch;
+						ctx.fillText(l, x, y);
+						if (l != " " && mouse.x > x - hcw && mouse.x < x + hcw && mouse.y > y - hch && mouse.y < y + hch)
+						{
+							mouseOver = true;
+							if (mousePress)
+							{
+								if (marks[i])
+									marks[i] = false;
+								else
+									marks[i] = true;
+							}
+						}
+						if (marks[i])
+						{
+							ctx.beginPath();
+							ctx.moveTo(x-hcw, y-hch);
+							ctx.lineTo(x+hcw, y+hch);
+							ctx.moveTo(x-hcw, y+hch);
+							ctx.lineTo(x+hcw, y-hch);
+							ctx.stroke();
+
+						}
+						var expected = false;
+
+						if (checkCase)
+						{
+							if (l != l.toLowerCase())
+								expected = true;
+						}
+						if (checkSpace)
+						{
+							if (c > 0 && row[c - 1] == " ")
+								expected = true;
+							if (c < row.length - 1 && row[c + 1] == " ")
+								expected = true;
+						}
+						if (marks[i])
+						{
+							if (expected)
+								correct++;
+							else
+								wrong++;
+						}
+						else
+						{
+							if (expected)
+								missed++;
+						}
+						i++;
+					}
+					if (r % 4 == 3)
+						oy += 10;
+				}
+				//ctx.fillText(correct + ' ' + missed + ' ' + wrong, 100, 550);
+			}
+			var Finish = function()
+			{
+				if ($("#main_canvas__ID").is(':hidden')) //hacky and ugly way :(
+					return;
+				current += practice ? 2 : 1;
+				{
+					$('.stop-button').hide();
+					var endTime = Date.now();
+					results.Time.push(timelimit == 0 ? endTime - startTime : timelimit);
+					results.Correct.push(correct);
+					results.Missed.push(missed);
+					results.Wrong.push(wrong);
+					if (current >= instructions.length)
+					{
+						finished = true;
+						results.Duration = results.Time.join(",");
+						results.Hits = results.Correct.join(",");
+						results.Omissions = results.Missed.join(",");
+						results.Commissions = results.Wrong.join(",");
+						callback(results);
+					}
+					else
+					{
+						Instructions();
+					}
+				}
+			}
+			function getXY(canvas, event)
+			{
+				const rect = canvas.getBoundingClientRect()
+				const y = event.clientY - rect.top
+				const x = event.clientX - rect.left
+				return {x:x, y:y}
+			}
+			$("#main_canvas__ID").mousemove(function(e)
+			{
+				if ($("#main_canvas__ID").is(':hidden')) //hacky and ugly way :(
+					return;
+				const XY = getXY(canvas, e)
+				var x = XY.x;
+				var y = XY.y;
+				mouse.x = x;
+				mouse.y = y;
+				Update();
+				if (mouseOver)
+					canvas.style.cursor = 'pointer';
+				else
+					canvas.style.cursor = 'inherit';
+				/*
+				for (var i=0; i<rects.length; i++)
+				{
+					var r = rects[i];
+					if (x > r.x && x < r.x + r.width && y > r.y && y < r.y + r.height)
+					{
+						canvas.style.cursor = 'pointer';
+					}
+				}
+*/
+			}).mouseup(function() {
+				mouseDown = false;
+				Update();
+				if (mouseOver)
+					canvas.style.cursor = 'pointer';
+				else
+					canvas.style.cursor = 'inherit';
+			})
+			.mousedown(function() {
+				mouseDown = true;
+				mousePress = true;
+				mouseDrag.x = mouse.x;
+				mouseDrag.y = mouse.y;
+				Update();
+				mousePress = false;
+			});
+			var mouseDown = false;
+			var mousePress = false;
+			Instructions();
+			$('.start-button').on('click',function(){
+				Start();
+			});
+			$('.stop-button').on('click',function(){
+				Finish();
+			});
+			//------------------------------------
+		}
+		//------------------------------------
+	}
+</script>
+<style>
+	#D__ID{
+		height:100%;
+		overflow:auto;
+		animation: vm_module_fadein 1.0s;
+	}
+	#thirdparty_container__ID{
+		overflow: hidden;
+	}
+</style>

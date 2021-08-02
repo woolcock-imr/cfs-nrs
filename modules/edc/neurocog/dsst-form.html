@@ -1,0 +1,285 @@
+<div id=thirdparty_container__ID>
+	<div class="container" style="margin: auto; text-align:center;">
+		<div class="col-12 col-lg-12 col-md-12 col-sm-12 mx-auto formbox">
+			<div class="row">
+				<div class="col-12">
+				<!-- form start -->
+				<form id="F__ID">
+					<!-- participant name and study id -->
+					<div id="participant_div__ID">
+						<div class="form-group">
+							<fieldset class="subquestions">
+								<label ><span class="">Participant</span>
+									<input type=text name="Participant" class=form-control id=Participant__ID data-id="Participant"/>
+								</label><br>
+								<label ><span class="">Participant ID</span>
+									<input type=text name="Participant_uid" class=form-control readonly />
+								</label>
+							</fieldset>
+						</div>
+					</div>
+				</form>
+				</div>
+			</div>
+		</div>
+	
+		<div class="row row__ID">
+			<div class="col-sm" >
+				<table style="margin: auto;">
+					<tr>
+						<td><img src='__CURRENT_PATH__/0.jpg'></td>
+						<td><img src='__CURRENT_PATH__/1.jpg'></td>
+						<td><img src='__CURRENT_PATH__/2.jpg'></td>
+						<td><img src='__CURRENT_PATH__/3.jpg'></td>
+						<td><img src='__CURRENT_PATH__/4.jpg'></td>
+						<td><img src='__CURRENT_PATH__/5.jpg'></td>
+						<td><img src='__CURRENT_PATH__/6.jpg'></td>
+						<td><img src='__CURRENT_PATH__/7.jpg'></td>
+						<td><img src='__CURRENT_PATH__/8.jpg'></td>
+						<td><img src='__CURRENT_PATH__/9.jpg'></td>
+					</tr>
+					<tr style="border">
+						<td class=symbol_pic><img src='__CURRENT_PATH__/pic0.jpg'></td>
+						<td class=symbol_pic><img src='__CURRENT_PATH__/pic1.jpg'></td>
+						<td class=symbol_pic><img src='__CURRENT_PATH__/pic2.jpg'></td>
+						<td class=symbol_pic><img src='__CURRENT_PATH__/pic3.jpg'></td>
+						<td class=symbol_pic><img src='__CURRENT_PATH__/pic4.jpg'></td>
+						<td class=symbol_pic><img src='__CURRENT_PATH__/pic5.jpg'></td>
+						<td class=symbol_pic><img src='__CURRENT_PATH__/pic6.jpg'></td>
+						<td class=symbol_pic><img src='__CURRENT_PATH__/pic7.jpg'></td>
+						<td class=symbol_pic><img src='__CURRENT_PATH__/pic8.jpg'></td>
+						<td class=symbol_pic><img src='__CURRENT_PATH__/pic9.jpg'></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		  <div class="row row__ID">
+			<div class="col-sm" id=examples__ID style='margin-top:20px; font-size:large; color:rgba(255,150,150,255)'>
+			Example:
+			</div>
+		</div>
+		<div class="row row__ID">
+			<div class="col-sm" style='margin-top:20px;'>
+				<img src='__CURRENT_PATH__/pic0.jpg' id=current_symbol__ID>
+			</div>
+		</div>
+		<div class="row row__ID">
+			<div class="col-sm" >
+				<button id=start_button__ID style="margin-top:40px;" class='btn btn-primary btn-lg'>Start</button>
+			</div>
+		</div>
+		<div class="row row__ID" id=instructions__ID>
+			<div class="col-sm" style='margin-top:40px; font-size:x-large; color:rgba(0,0,255,255)'>
+Instructions:
+Using the guide above, press the number on your keypad corresponding to the random symbol displayed. Work as quickly as you can.
+			</div>
+		</div>
+	</div>
+	<canvas id=main_canvas__ID width=1100 height=300 style="margin: auto; display: block;"></canvas>
+</div>
+<script>
+	function F__ID(){
+		//-------------------------------------
+		VmInclude:__COMPONENT__/f/form.01.js
+		VmInclude:__CURRENT_PATH__/../../library/shared-form.js
+		//-------------------------------------
+		$('#header_0').hide();
+		$('body').css('background','white');
+		var intervals = [];
+		//------------------------------------
+		var this_module=$vm.module_list[$vm.vm['__ID'].name];
+		//------------------------------------
+		var load2=m.load;
+		m.load=function(){
+			load2();
+			$('#thirdparty_container__ID').css('height',$vm.min_height);
+			third_party("thirdparty_container__ID",data_process);
+		}
+		//------------------------------------
+        var calc=function(data){
+			data.WrongCount = (data.Count-data.Correct);
+			data.Accuracy = ((data.Correct/data.Count)*100).toFixed(2);
+			data.MeanLatency = (data.Duration/data.Count).toFixed(2);
+			data.MeanLat_Seg1 = ((data.Duration/3)/data.TestCount_Seg1).toFixed(2);
+			data.MeanLat_Seg2 = ((data.Duration/3)/data.TestCount_Seg2).toFixed(2);
+			data.MeanLat_Seg3 = ((data.Duration/3)/data.TestCount_Seg3).toFixed(2);
+			data.GrandMean = ((parseFloat(data.MeanLat_Seg1)+parseFloat(data.MeanLat_Seg2)+parseFloat(data.MeanLat_Seg3))/3).toFixed(2);
+
+//			data.MeanRT=(react/rt.length*0.001).toFixed(3);
+    	}
+		//------------------------------------
+		var ClearIntervals = function()
+		{
+			for (var i=0; i<intervals.length; i++)
+			{
+				clearTimeout(intervals[i]);
+			}
+			intervals = [];
+		}
+		//------------------------------------
+		$('#D__ID').on('unload',function(){
+			//alert('unload');
+			ClearIntervals();
+		})
+		//------------------------------------
+		var data_process=function(data){
+			calc(data);
+			data.Participant=$('#Participant__ID').val();
+			data.Participant_uid=$("input[name='Participant_uid']").val();
+			data.sysStatus='#00FF00';
+			//alert(JSON.stringify(data));
+			$vm.request({cmd:"insert",table:m.Table,data:data},function(res){
+				if(res.status=="np"){
+					alert("No permission to insert a new record in to the database.");
+					if(m.input.goback!=undefined){
+						$vm.refresh=1;
+						window.history.go(-1);       //from grid
+					}
+					return;
+				}
+				else { 
+					$vm.refresh=1;
+					window.history.go(-1);
+				}
+			});
+		}
+		//------------------------------------
+		var third_party=function(containerID,callback){
+
+			var images = ['__CURRENT_PATH__/pic0.jpg','__CURRENT_PATH__/pic1.jpg','__CURRENT_PATH__/pic2.jpg','__CURRENT_PATH__/pic3.jpg','__CURRENT_PATH__/pic4.jpg','__CURRENT_PATH__/pic5.jpg','__CURRENT_PATH__/pic6.jpg','__CURRENT_PATH__/pic7.jpg','__CURRENT_PATH__/pic8.jpg','__CURRENT_PATH__/pic9.jpg'];
+			$('#instructions').show();
+			ClearIntervals();
+			$('#'+containerID).css('background-color','#ffffff');
+			$("#start_button__ID").css("visibility", "visible");
+			$("#examples__ID").css("visibility", "hidden");
+
+			var timelimit = 90000;
+			var current = -1;
+			var repeat = 0;
+
+			var examples = 3;
+			var example = 0;
+
+			var started = false;
+			var startTime;
+			var results = {
+				Count : 0,
+				TestCount_Seg1 : 0,
+				TestCount_Seg2 : 0,
+				TestCount_Seg3 : 0,
+				Correct : 0,
+				Correct1 : 0,
+				Correct2 : 0,
+				Correct3 : 0,
+				timelimit,
+				StartTime : ""
+			};
+			var Start = function()
+			{
+				if ($("#thirdparty_container__ID").is(':hidden')) //hacky and ugly way :(
+					return;
+				$("#start_button__ID").css("visibility", "hidden");
+				$('#participant_div__ID').css("visibility", "hidden");
+				Next();
+				started = true;
+			}
+
+			var Next = function()
+			{
+				if (example == examples)
+				{
+					example++;
+					$("#examples__ID").css("visibility", "hidden");
+					$('#instructions__ID').hide();
+					startTime = Date.now();
+					results.StartTime=get_now();
+					intervals.push(setTimeout(Finish, timelimit));
+				}
+				else if (example < examples)
+				{
+					example++;
+					$("#examples__ID").css("visibility", "visible");
+					$("#examples__ID").text("EXAMPLE " + example + "/" + examples);
+				}
+				var next;
+				do {
+					next = Math.floor(Math.random() * images.length);
+				} while (current == next);
+
+				current = next;
+
+				$("#current_symbol__ID").attr("src", images[current]);
+			}
+			$(document).keypress(function(e){
+				if ($("#thirdparty_container__ID").is(':hidden') || !started) //hacky and ugly way :(
+					return;
+				if (example >= examples)
+				{
+					if (current == e.key) {
+						results.Correct++;
+						if((Date.now() - startTime)<=timelimit/3) results.Correct1++;
+						else if ((Date.now() - startTime)<=timelimit*2/3) results.Correct2++;
+						else  results.Correct3++;
+					}
+					results.Count++;
+					if((Date.now() - startTime)<=timelimit/3) results.TestCount_Seg1++;
+					else if ((Date.now() - startTime)<=timelimit*2/3) results.TestCount_Seg2++;
+					else  results.TestCount_Seg3++;
+				}
+				Next();
+				e.preventDefault();
+			});
+			var Finish = function()
+			{
+				started = false;
+				if ($("#thirdparty_container__ID").is(':hidden')) //hacky and ugly way :(
+					return;
+				if (example >= examples)
+				{
+					results.TestCountTotal = results.Count;
+					results.CorrectCount = results.Correct;
+					results.Duration=(results.timelimit)/1000
+					callback(results);
+				}
+			}
+			$('#start_button__ID').on('click',function(){
+				Start();
+			});
+			//------------------------------------
+			var get_now=function(){
+                 var today = new Date();
+                 var dd = today.getDate();
+                 var mm = today.getMonth()+1; //January is 0!
+
+				 var yyyy = today.getFullYear();
+				 var hh = today.getHours()
+				 var mn = today.getMinutes()
+				 var ss = today.getSeconds()
+                 if(dd<10){dd='0'+dd;}
+                 if(mm<10){mm='0'+mm;}
+                 if(mn<10){mn='0'+mn;}
+                 if(hh<10){hh='0'+hh;}
+                 if(ss<10){ss='0'+ss;}
+                 return hh+':'+mn+':'+ss;
+             }
+			//------------------------------------
+		}
+		//------------------------------------
+	}
+</script>
+<style>
+	#D__ID{
+		height:100%;
+		overflow:auto;
+		animation: vm_module_fadein 1.0s;
+	}
+	#thirdparty_container__ID{
+		overflow: hidden;
+	}
+	table {
+		border-collapse: collapse;
+	}
+	td.symbol_pic {
+		border: 1px solid black;
+	}
+</style>

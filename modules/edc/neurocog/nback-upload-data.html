@@ -1,0 +1,70 @@
+<section>
+    VmInclude:__CURRENT_PATH__/../../library/grid.v1h.html
+</section>
+<script>
+    function F__ID(){
+        //-------------------------------------
+        VmInclude:__COMPONENT__/g/grid.01.js
+        VmInclude:__CURRENT_PATH__/../../library/shared-data.js
+        //-------------------------------------
+        $('#title__ID').text('N-Back Checking Calculation')
+        //-------------------------------------
+		var fields="File_Name,NBACK,Start_Time,NGTA,NGRT,GMRT,NTCR,NTIC,NMIS,NMRT,MRTCM,MRTCN,SDCR,SDCM,SDCN,MdRTCR,MdRTCM,MnRTCR,MxRTCR,MF10CR,MS10CR,SDF10CR,SDS10CR,NTCM,NTCN,NTFM,NTFN,NTWR,NNO,NRT,NAC";
+        m.fields="_Form,_Status,_Notes,_Participant_ID,Participant,"+fields+",Submit_date,Submitted_by,_Delete";
+        //-------------------------------------
+        var cell_render=m.cell_render;
+            m.cell_render=function(records,I,field,td){
+                cell_render(records,I,field,td);
+                switch(field){
+                    case 'File_Name':
+                        m.set_file_link(records,I,field,td)
+                        break;
+                }
+            }
+        //-------------------------------------
+
+        /*
+
+        CM Correct Match
+        CN Correct Non-Match
+        FM False Match (N-key was selected for a Match stimulus)
+        FN False Non-Match (M-key was selected for Non-Match stimulus)
+        O Omission (failure to respond in time allowable; for both Match and Non-Match stimuli)
+        W Wrong key entered, for both Match and Non-Match stimuli
+        NNO Trial number
+        NGTA Grand total Accuracy  100*(CM+CN)/(CM+CN+FM+FN)
+        NGRT Grand total reaction time (sum of NRT) in msecs
+        GMRT Average reaction Time for all responses
+        NRT (1, 2, 3) Reaction Time (per letter presentation i.e. each trial) in msecs
+        NAC (1, 2, 3) Accuracy (per letter presentation i.e. each trial)
+        NTCR Total number correct (sum of CM + CN)
+        NTIC Total number incorrect (sum of FM + FN)
+        NTMR Total number of multiple responses (Not possible! Only one keystroke allowed)
+        NMIS Total number missed (O) (sum of O)
+        NMRT Mean RT (msecs) for Correct Match (CM) + Correct Non-Match (CN) (sum of RT’s for all CM + CN/(NTCM +NTCN)
+        MRTCM Mean RT in (msecs) for Correct Match (CM) (Sum RT for all CM’s/NTCM)
+        MRTCN Mean RT in (msecs) for Correct Non-Match (CN) (Sum RT for all CN’s/NTCN)
+        SDCR Standard deviation (SD) for Correct Match + Correct Non-Match
+        SDCM SD for Correct Match
+        SDCN SD for Correct Non-Match
+        MdRTCR Median RT (msecs) for Correct Match + correct Non-Match
+        MdRTCM Median RT in (msecs) for Correct Match 
+        MdRTCN Median RT in (msecs) for Correct Non-Match
+        MnRTCR Minimum RT (msecs) for Correct Match + Correct Non-Match
+        MxRTCR Maximum RT (msecs) for Correct Match + Correct Non-Match
+        MF10CR Mean RT (msecs) fastest 10% for Correct Match + Correct Non-Match
+        MS10CR Mean RT (msecs) slowest 10% for Correct Match + Correct Non-Match
+        SDF10CR SD of fastest 10% RT for Correct Match + Correct Non-Match
+        SDS10CR SD of slowest 10% RT for correct Match + correct Non-Match
+        NTCM Total number of Correct Match (CM)
+        NTCN Total number of Correct Non-Match (CM)
+        NTFM Total number of False Match (FM)
+        NTFN Total number of False Non-Match (FN)
+        NTWR Total number of Wrong keys (W)
+
+        */
+    }
+</script>
+<style>
+    VmInclude:__COMPONENT__/g/grid.01.css
+</style>

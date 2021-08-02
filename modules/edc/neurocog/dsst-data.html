@@ -1,0 +1,36 @@
+<section>
+    VmInclude:__CURRENT_PATH__/../../library/grid.v1h.html
+  </section>
+  <script>
+    function F__ID(){
+        //-------------------------------------
+        VmInclude:__COMPONENT__/g/grid.01.js
+        VmInclude:__CURRENT_PATH__/../../library/shared-data.js
+        //-------------------------------------
+        $('#title__ID').text('Digit Symbol Substitution Task')
+        //-------------------------------------
+		var fields="StartTime,TestCountTotal,Duration,CorrectCount,WrongCount,Accuracy,MeanLatency,MeanLat_Seg1,MeanLat_Seg2,MeanLat_Seg3,GrandMean,TestCount_Seg1,TestCount_Seg2,TestCount_Seg3";
+        m.fields="_Status,_Notes,_Participant_ID,Participant,"+fields+",Submit_date,Submitted_by,_Delete";
+        //-------------------------------------
+    }
+    /*
+    StartTime Startime for the task
+    TestCountTotal Total number of symbols presented
+    Duration Total Test Time (Duration)
+    CorrectCount Total Number of Correct responses 
+    WrongCount Total Number of Wrong Responses
+    Accuracy Measured by calculating the total number of attempts made (TestCountTotal) and the number correct responses made (CorrectCount) CorrectCount/TestCountTotal x 100
+    MeanLatency Amount of time elapsed between symbol presentation and response (Mean latency to response for all items)
+    MeanLat_Seg1 Mean segment 1 latency (first 30sec block). Sum of reaction times (latency) of each trial of the first 30 seconds of the test divided by the number of symbols presented for first 30 second segment (TestCount_Seg1)
+    MeanLat_Seg2 Mean segment 2 latency (second 30sec block). Sum of reaction times (latency) of each trial of the second 30 seconds of the test divided by the number of symbols presented for first 30 second segment (TestCount_Seg1)
+    MeanLat_Seg3 Mean segment 3 latency (third 30sec block). Sum of reaction times (latency) of each trial of the third 30 seconds of the test divided by the number of symbols presented for first 30 second segment (TestCount_Seg1)
+    GrandMean Mean of MeanLat_Seg1  + MeanLat_Seg2 + MeanLat_Seg3
+    TestCount_Seg1  Total number of symbols presented in first 30 seconds
+    TestCount_Seg2  Total number of symbols presented in second 30 seconds
+    TestCount_Seg3  Total number of symbols presented in third 30 seconds
+
+    */
+  </script>
+  <style>
+    VmInclude:__COMPONENT__/g/grid.01.css
+  </style>

@@ -24,13 +24,13 @@
 		      <ul>
 		        <li module=Screening_Visitdate>Visit date</li>
 		        <li module=Screening_Anthro>Anthropometry</li>
-		        <li module=Wristox>WristOx</li>
+		        <li module=Screening_wristox>WristOx</li>
 		        <li module=Screening_Actigraphy>Actigraphy</li>
 		        <li module=Screening_Sleepdiary>Sleep Diary</li>
 		        <li module=Screening_DiagnosticPSG>Diagnostic Sleep Report </li>
-		        <li module=Screening_EDF> EDF file Upload</li>
-		        <li module=Screening_Sleepscoring>Sleep Scoring File Upload</li>
-		        <li module=Screening_IncluExclu>Inclusion & Exclusion Criteria</li>
+		        <!-- <li module=Screening_EDF> EDF file Upload</li> -->
+		        <!-- <li module=Screening_Sleepscoring>Sleep Scoring File Upload</li> -->
+		        <!-- <li module=Screening_IncluExclu>Inclusion & Exclusion Criteria</li> -->
 		      </ul>
 			<br>
 			<span>Questionnaires</span><br>
@@ -53,7 +53,7 @@
   <span>Visit 1 - Evening</span><br>
     <ul>
   <li module=Night_Visit_Date>Visit Date</li>
-  <li module=Night_Visit_Anthro>Anthropometry</li>
+  <li module=visit_anthro>Anthropometry</li>
     </ul>
 
 
@@ -61,8 +61,9 @@
   <br>
     <ul>
       <li module=Night_Visit_Flinders>Evening Flinder's Fatigue Scale </li>
-      <li module=Pre_PASAT>Evening Paced Auditory Serial Addition Task (PASAT)</li>
-      <li module=Night_Visit_LCT>Evening Letter Cancellation Task</li>
+      <li module=pasat_scores>Evening Paced Auditory Serial Addition Task (PASAT)</li>
+      <li module=Night_Visit_LCT><b>OLD</b>Evening Letter Cancellation Task</li>
+			<li module=new-lct-data><b>NEW</b>Evening Letter Cancellation Task</li>
       <li module=NightVisit_ERP> Evening Event Related Potentials (ERP) </li>
      
     </ul>
@@ -100,7 +101,7 @@
     <ul>
       <li module=KSS2>Morning Karolinska Sleepiness Scale (KSS) 2.0</li>
       <li module=KDT2>Morning Karolinska Drowsiness Test (KDT) 2.0</li>
-      <li module=Morning_PASAT>Morning Paced Auditory Serial Addition Test (PASAT)</li>
+      <li module=pasat_scores>Morning Paced Auditory Serial Addition Test (PASAT)</li>
       <li module=Morning_word_pair_Set_1> Morning Memory Task Word Pairs Set 1</li>
       <li module=Morning_word_pair_Set_2> Morning Memory Task Word Pairs Set 2</li>
       <li module=FTT_6>Morning Finger Tapping Task (6 Minutes)</li>

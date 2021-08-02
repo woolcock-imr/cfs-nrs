@@ -1,7 +1,9 @@
 {
 	"modules":
 	{
-		"participant":	  {"table_id":"20010378","url":"/modules/participant-and-others/task/participant.html", "name_for_search":"Participant"},
+		"participant":	  {"table_id":"20010378","url":"/modules/participant-and-others/task/participant.html", "name_for_search":"Participant",
+											"participant_id": {"field1": "Subject_ID","field2": "Subject_Initials"}
+											},
 		"edc-notes":	  {"table_id":"20010379","url":"/modules/participant-and-others/task/edc-notes.html", "name_for_search":"EDC notes"},
 		"login-setup":	  {"table_id":"20010380","url":"/modules/participant-and-others/task/participant-login-setup.html", "name_for_search":"Login setup"}
 	}

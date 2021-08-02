@@ -1,0 +1,675 @@
+<div id=thirdparty_container__ID>
+	<div class="col-12 col-lg-12 col-md-12 col-sm-12 mx-auto formbox">
+		<div class="row">
+			<div class="col-12">
+			<!-- form start -->
+			<form id="F__ID">
+				<!-- participant name and study id -->
+				<div id="participant_div__ID">
+					<div class="form-group">
+						<fieldset class="subquestions">
+							<label ><span class="">Participant</span>
+								<input type=text name="Participant" class=form-control id=Participant__ID data-id="Participant"/>
+							</label><br>
+							<label ><span class="">Participant ID</span>
+								<input type=text name="Participant_uid" class=form-control readonly />
+							</label>
+						</fieldset>
+					</div>
+				</div>
+			</form>
+			</div>
+		</div>
+	</div>
+	<canvas id=main_canvas__ID width=1100 height=500 style="margin: auto; display: block;"></canvas>
+	<div id=instructions__ID style="margin : auto; text-align : center; max-width : 1100px;">
+		<div style='margin-top:0px; font-size:x-large; color:rgba(0,0,255,255)'>Instructions:
+Click-and-drag to arrange the coloured balls on the left to match the Goal on the right within the set number of moves.</div>
+	</div>
+</div>
+<script>
+	function F__ID(){
+		//-------------------------------------
+		VmInclude:__COMPONENT__/f/form.01.js
+		VmInclude:__CURRENT_PATH__/../../library/shared-form.js
+		//-------------------------------------
+		var intervals = [];
+		$('#header_0').hide();
+		$('body').css('background','white');
+		//------------------------------------
+		var this_module=$vm.module_list[$vm.vm['__ID'].name];
+		//------------------------------------
+		$('#D__ID').on('load',function(){
+			$('#header').hide();
+			$('#footer').hide();
+			$('#participant_div__ID').hide()
+			$('#thirdparty_container__ID').css('height',$vm.min_height);
+			third_party("thirdparty_container__ID",data_process);
+		})
+		//------------------------------------
+		var calc=function(data){
+    	    var tpt=data.TPT.split(",");
+            var tft=data.TFT.split(",");
+            var tss=data.TSS.split(",");
+            var tno=data.TNO.split(",");
+            var ss=0;
+            var plan=0.0;
+            var finish=0.0;
+            for (var i=0;i<tpt.length;i++){
+     	        plan=plan+parseInt(tpt[i]);
+     	        finish=finish+parseInt(tft[i]);
+     	        if(tss[i]=='W') ss++;
+            }
+            data.TGME=(ss/tpt.length).toFixed(2).toString();
+            data.TGMT=((plan+finish)/tpt.length*0.001).toFixed(3).toString();
+            data.TMIS=ss.toString();
+            data.TPLAN=((plan)/tpt.length*0.001).toFixed(3).toString();
+        }
+		//------------------------------------
+		var ClearIntervals = function()
+		{
+			for (var i=0; i<intervals.length; i++)
+			{
+				clearTimeout(intervals[i]);
+			}
+			intervals = [];
+		}
+		//------------------------------------
+		$('#D__ID').on('unload',function(){
+			//alert('unload');
+			ClearIntervals();
+		})
+		//------------------------------------
+		var data_process=function(data){
+			//alert(JSON.stringify(data));
+			calc(data);
+			data.Participant=$('#Participant__ID').val();
+			data.Participant_uid=$("input[name='Participant_uid']").val();
+			data.sysStatus='#00FF00';
+			$vm.request({cmd:"insert",table:m.Table,data:data},function(res){
+				if(res.status=="np"){
+					alert("No permission to insert a new record in to the database.");
+					if(m.input.goback!=undefined){
+						$vm.refresh=1;
+						window.history.go(-1);       //from grid
+					}
+					return;
+				}
+				else { 
+					$vm.refresh=1;
+					window.history.go(-1);
+				}
+			});
+			//--------------------------------------------------------
+		}
+		//------------------------------------
+		var third_party=function(containerID,callback){
+			$('#instructions__ID').show();
+			ClearIntervals();
+			$('#'+containerID).css('background-color','#ffffff');
+			var canvas = document.getElementById('main_canvas__ID');
+			var ctx = canvas.getContext('2d');
+			var colors = { R:'red', G:'green', B:'blue' };
+			var colorsPicked = { R:'rgb(256,200,200)', G:'rgb(200,256,200)', B:'rgb(200,200,256)' };
+			var startPattern = 'GR B ';
+			var patterns = [
+				{p:'GB  R', m:2},
+				{p:' BG R', m:2},
+				{p:'G R B', m:2},
+				{p:'GB R ', m:3},
+				{p:'G RB ', m:3},
+				{p:'RG B ', m:4},
+				{p:'B RG ', m:4},
+				{p:'RB  G', m:4},
+				{p:' RB G', m:4},
+				{p:'RGB  ', m:5},
+				{p:'RBG  ', m:5},
+				{p:'BG R ', m:5},
+				{p:'B R G', m:5},
+			];
+			var currentPattern = 0;
+			var examplePatterns = 1;
+			var maxRepeats = 3;
+			var repeat = 0;
+			var score = 0;
+			var badAttempts = 0;
+			var usedMoves = 0;
+			var numberOfMoves = 0;
+			var startTime;
+			var planningTime = null;
+			var width = canvas.width;
+			var height = canvas.height;
+			var midX = width / 2;
+			var midY = height / 2;
+			var separation = 140;
+			var towersY = 400;
+			var pickedTower = null;
+			var pickedBall = null;
+
+			var finished = false;
+			var mouseDrag = {x:0, y:0};
+			var results = {
+				Test : [],
+				Correct : [],
+				Planning_Time : [],
+				Finish_Time : [],
+			};
+			var mouse = {x:0, y:0};
+			var mouseOver = false;
+			var waitForButton = false;
+			var rects = [];
+			var success = false;
+			var fail = false;
+			var next = false;
+			ctx.clearRect(0, 0, width, height);
+			ctx.fillStyle = 'rgb(0,0,255)';
+			ctx.textAlign = 'center';
+			ctx.textBaseline = 'middle';
+			ctx.font = '48px arial';
+			function ResetPattern()
+			{
+				FillTowers(towersGoal, patterns[currentPattern].p);
+				FillTowers(towers, startPattern);
+				usedMoves = 0;
+				numberOfMoves = patterns[currentPattern].m;
+				if (currentPattern == examplePatterns)
+				{
+					$('#participant_div__ID').css("visibility", "hidden");
+					$('#instructions__ID').hide();
+
+					score = 0;
+				}
+				startTime = Date.now();
+				if(currentPattern==1) results.StartTime=get_now();
+				planningTime = null;
+				success = false;
+				fail = false;
+				next = false;
+				Update();
+			}
+			function Dist(x, y)
+			{
+				return Math.sqrt(x*x + y*y);
+			}
+			function Tower(x, capacity, active)
+			{
+				this.x = x;
+				this.capacity = capacity;
+				this.segmentHeight = 70;
+				this.balls = [];
+				this.active = active;
+				this.Draw = function(ctx, sx, sy)
+						{
+							var x = sx + this.x;
+							var y = sy;
+							ctx.beginPath();
+							ctx.moveTo(x, y);
+							ctx.lineTo(x, y - this.segmentHeight * this.capacity);
+							ctx.lineWidth = 10;
+							ctx.strokeStyle = 'rgb(0,0,0)';
+							ctx.stroke();
+						};
+				this.DrawBalls = function(ctx, sx, sy, drawGoal)
+						{
+							var x = sx + this.x;
+							var y = sy;
+							var b = null;
+							for (var i=0; i<this.balls.length; i++)
+							{
+								b = this.balls[i];
+								//if (b == pickedBall)
+									//continue;
+
+								var by = y - this.segmentHeight * (i + 0.5);
+								var bx = x;
+								if (this.active && i == this.balls.length - 1 && !waitForButton)
+								{
+									if (Dist(mouse.x - bx, mouse.y - by) < 35)
+									{
+										mouseOver = true;
+										if (mouseDown && pickedBall == null)
+										{
+											pickedTower = this;
+											pickedBall = b;
+										}
+									}
+								}
+								if (this.active && b == pickedBall)
+								{
+									bx += mouse.x - mouseDrag.x;
+									by += mouse.y - mouseDrag.y;
+									ctx.fillStyle = colorsPicked[b];
+								}
+								else
+								{
+									ctx.fillStyle = colors[b];
+								}
+								//alert('drawing ball ' + b + ' with ' + colors[b]);
+								ctx.beginPath();
+								ctx.arc(bx, by, 35, 0, 2*Math.PI);
+								ctx.fill();
+								ctx.font = '40px arial';
+								ctx.fillStyle = 'rgb(255,255,255)';
+								ctx.fillText(b, bx, by);
+							}
+
+							if (this.active && pickedBall != null && pickedBall != b)
+								drawGoal = 0;
+							if (this.active && drawGoal >= 0 && this.balls.length < this.capacity && !waitForButton)
+							{
+								ctx.strokeStyle = 'rgb(100,0,0)';
+								ctx.setLineDash([10, 10]);
+								ctx.lineWidth = 2;
+								var by = y - this.segmentHeight * (this.balls.length + 0.5);
+								var bx = x;
+								ctx.beginPath();
+								ctx.arc(bx, by, 35, 0, 2*Math.PI);
+								ctx.stroke();
+								ctx.setLineDash([]);
+								if (mouseDown == false && pickedBall != null)
+								{
+									if (Dist(mouse.x - bx, mouse.y - by) < 35)
+									{
+										this.TakeBall(pickedTower);
+										pickedBall = null;
+										pickedTower = null;
+									}
+								}
+								if (drawGoal > 0)
+								{
+									ctx.font = '32px arial';
+									ctx.fillStyle = 'rgb(100,0,0)';
+									ctx.fillText(drawGoal, bx - 15, by - this.segmentHeight * 0.8);
+								}
+							}
+						};
+				this.TakeBall = function(tower)
+						{
+							if (tower.balls.length > 0 && this.balls.length < this.capacity)
+							{
+								this.balls.push(tower.balls.pop());
+								if (planningTime == null)
+									planningTime = Date.now();
+								usedMoves++;
+							}
+						};
+			}
+
+			function DrawTowers(towers, x, y, goal)
+			{
+				if (goal)
+				{
+					var margin = 60;
+					var w = separation * (towers.length - 0.5) + margin * 2;
+					var h = towers[0].segmentHeight * towers[0].capacity + margin * 2;
+					var rx = x + separation*0.75 - margin;
+					var ry = y + margin - h;
+					var mx = rx + w * 0.5;
+					ctx.fillStyle = 'rgb(200,200,200)';
+					roundRect(ctx, rx, ry, w, h, 30, true, false);
+					ctx.font = '24px arial';
+					ctx.fillStyle = 'blue';
+					ctx.fillText("Goal", mx, ry + margin * 0.5);
+					ctx.font = '20px arial';
+					ctx.fillStyle = 'rgb(0,0,150)';
+					ctx.fillText("Number of moves: " + numberOfMoves, mx, ry + h - margin * 0.5);
+				}
+				for (var i=0; i<towers.length; i++)
+				{
+					towers[i].Draw(ctx, x, y);
+				}
+				for (var i=0; i<towers.length; i++)
+				{
+					towers[i].DrawBalls(ctx, x, y, pickedTower != null && pickedTower != towers[i] ? i + 1 : -1);
+				}
+				ctx.beginPath();
+				ctx.moveTo(x + separation *0.75, y);
+				ctx.lineTo(x + separation * (towers.length + 0.25), y);
+				ctx.lineWidth = 13;
+				ctx.strokeStyle = 'rgb(100,0,0)';
+				ctx.stroke();
+
+			}
+
+			function FillTowers(towers, patternStr)
+			{
+				var pattern = patternStr.split(' ');
+				pattern.forEach(function(v, i)
+				{
+					towers[i].balls = [];
+					var bl = v.split('');
+					bl.forEach(function(b)
+					{
+						towers[i].balls.push(b);
+					});
+				})
+				//for (int i=0; i<pattern.lenght; i++
+			}
+			var towers = [];
+			for (var i=0; i<3; i++)
+			{
+				towers.push(new Tower(separation + i * separation, 3 - i, true));
+			}
+			var towersGoal = [];
+			for (var i=0; i<3; i++)
+			{
+				towersGoal.push(new Tower(separation + i * separation, 3 - i, false));
+			}
+			function Update()
+			{
+				var example = currentPattern < examplePatterns;
+				mouseOver = false;
+				ctx.clearRect(0, 0, width, height);
+				DrawTowers(towers, 0, towersY);
+				DrawTowers(towersGoal, midX, towersY, true);
+
+				ctx.font = '24px arial';
+				ctx.fillStyle = 'rgb(150,0,0)';
+				ctx.fillText("SCORE: " + score, midX, 20);
+				ctx.font = '20px arial';
+				ctx.fillStyle = 'blue';
+				ctx.fillText("Unsuccessfull attempts: " + badAttempts, midX, 60);
+				ctx.font = '24px arial';
+				ctx.fillStyle = 'rgb(150,0,0)';
+				ctx.fillText("Used: " + usedMoves + " moves", midX * 0.75, 110);
+				if (example)
+				{
+					ctx.font = '36px arial';
+					ctx.fillStyle = 'red';
+					ctx.fillText("EXAMPLE: " + (currentPattern + 1) + '/' + examplePatterns, midX * 1.5, 110);
+				}
+
+				if (!waitForButton)
+				{
+					if (PatternsMatch(towers, towersGoal))
+					{
+						score += maxRepeats - repeat;
+						success = true;
+						next = true;
+						if (!example)
+							SaveAttempt(true);
+						waitForButton = true;
+					}
+					else
+					{
+						if (usedMoves >= numberOfMoves)
+						{
+							fail = true;
+							badAttempts++;
+							repeat++;
+							if (!example)
+								SaveAttempt(false);
+							if (repeat >= maxRepeats && !example)
+								next = true;
+							waitForButton = true;
+						}
+					}
+					if (next && currentPattern == patterns.length - 1)
+						Finish();
+				}
+				if (waitForButton)
+				{
+					var x = separation * 0.5;
+					var y = 130;
+					var w = 140;
+					var h = 30;
+					if (!finished)
+					{
+						if (mouse.x > x && mouse.x < x + w && mouse.y > y && mouse.y < y + h)
+						{
+							//canvas.style.cursor = 'pointer';
+							mouseOver = true;
+							if (mouseDown)
+							{
+								waitForButton = false;
+
+								if (fail)
+								{
+								}
+
+								if (next)
+								{
+									repeat = 0;
+									if (!example)
+										badAttempts = 0;
+									currentPattern++;
+								}
+								ResetPattern();
+								return;
+							}
+							ctx.fillStyle = 'rgb(0,0,255)';
+						}
+						else
+						{
+							ctx.fillStyle = 'rgb(50,50,255)';
+						}
+						roundRect(ctx, x, y, w, h, 10, true, false);
+
+						ctx.font = '20px arial';
+						ctx.fillStyle = 'white';
+						var buttonText;
+						if (next)
+						{
+							if (currentPattern == examplePatterns - 1)
+								buttonText = "Start Test";
+							else
+								buttonText = "Next";
+						}
+						else
+						{
+							buttonText = "Retry";
+						}
+						ctx.fillText(buttonText , x + w * 0.5, y + h * 0.5);
+					}
+					if (success)
+					{
+						ctx.font = '36px arial';
+						ctx.fillStyle = 'green';
+						ctx.fillText("PASSED", x + w * 0.5, y - 20);
+					}
+					if (fail)
+					{
+						ctx.font = '36px arial';
+						ctx.fillStyle = 'red';
+						ctx.fillText("FAILED", x + w * 0.5, y - 20);
+					}
+				}
+			}
+
+			function SaveAttempt(success)
+			{
+				var endTime = Date.now();
+				results.Test.push(currentPattern);
+				results.Correct.push(success ? 'C' : 'W');
+				results.Planning_Time.push(planningTime - startTime);
+				results.Finish_Time.push(endTime - startTime);
+			}
+
+			function PatternsMatch(t1, t2)
+			{
+				if (t1.length != t2.length)
+					return false;
+				for (var i=0; i<t1.length; i++)
+				{
+					var b1 = t1[i].balls;
+					var b2 = t2[i].balls;
+					if (b1.length != b2.length)
+						return false;
+					for (var j=0; j<b1.length; j++)
+					{
+						if (b1[j] != b2[j])
+							return false;
+					}
+				}
+				return true;
+			}
+
+			$(document).keypress(function(e){
+				if ($("#main_canvas__ID").is(':hidden')) //hacky and ugly way :(
+					return;
+				if (e.key >= 1 && e.key <= towers.length && !waitForButton)
+				{
+					var t = e.key - 1;
+					if (pickedTower != null && towers[t].balls.length < towers[t].capacity)
+					{
+						towers[t].TakeBall(pickedTower);
+						pickedTower = null;
+						Update();
+					}
+					else
+					{
+						if (towers[t].balls.length > 0)
+						{
+							pickedTower = towers[t];
+							Update();
+						}
+					}
+				}
+
+				if ((typeof e.key) == "string" && !waitForButton)
+				{
+					towers.forEach(function(t, i)
+					{
+						var chr = e.key.toUpperCase();
+						if (t.balls.length > 0 && t.balls[t.balls.length - 1] == chr)
+						{
+							pickedTower = towers[i];
+							Update();
+						}
+					});
+				}
+
+				e.preventDefault();
+
+			});
+			var Finish = function()
+			{
+				if ($("#main_canvas__ID").is(':hidden')) //hacky and ugly way :(
+					return;
+				finished = true;
+				results.TNO = results.Test.join(",");
+				results.TSS = results.Correct.join(",");
+				results.TPT = results.Planning_Time.join(",");
+				results.TFT = results.Finish_Time.join(",");
+				callback(results);
+			}
+			function roundRect(ctx, x, y, width, height, radius, fill, stroke)
+			{
+				if (typeof stroke == "undefined" ) {
+					stroke = true;
+				}
+				if (typeof radius === "undefined") {
+					radius = 5;
+				}
+				ctx.beginPath();
+				ctx.moveTo(x + radius, y);
+				ctx.lineTo(x + width - radius, y);
+				ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+				ctx.lineTo(x + width, y + height - radius);
+				ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+				ctx.lineTo(x + radius, y + height);
+				ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+				ctx.lineTo(x, y + radius);
+				ctx.quadraticCurveTo(x, y, x + radius, y);
+				ctx.closePath();
+				if (stroke) {
+					ctx.stroke();
+				}
+				if (fill) {
+					ctx.fill();
+				}
+			}
+
+			function getXY(canvas, event)
+			{
+				const rect = canvas.getBoundingClientRect()
+				const y = event.clientY - rect.top
+				const x = event.clientX - rect.left
+				return {x:x, y:y}
+			}
+
+			$("#main_canvas__ID").mousemove(function(e)
+			{
+				if ($("#main_canvas__ID").is(':hidden')) //hacky and ugly way :(
+					return;
+				const XY = getXY(canvas, e)
+				var x = XY.x;
+				var y = XY.y;
+
+				mouse.x = x;
+				mouse.y = y;
+
+				Update();
+
+				if (mouseOver)
+					canvas.style.cursor = 'pointer';
+				else
+					canvas.style.cursor = 'inherit';
+				/*
+				for (var i=0; i<rects.length; i++)
+				{
+					var r = rects[i];
+					if (x > r.x && x < r.x + r.width && y > r.y && y < r.y + r.height)
+					{
+						canvas.style.cursor = 'pointer';
+					}
+
+				}
+*/
+			}).mouseup(function() {
+				mouseDown = false;
+				Update();
+				pickedBall = null;
+				pickedTower = null;
+				Update();
+				if (mouseOver)
+					canvas.style.cursor = 'pointer';
+				else
+					canvas.style.cursor = 'inherit';
+			})
+			.mousedown(function() {
+				mouseDown = true;
+				mouseDrag.x = mouse.x;
+				mouseDrag.y = mouse.y;
+				Update();
+			});
+			var mouseDown = false;
+
+
+			ResetPattern();
+
+			/*$('#start_button').on('click',function(){
+				Start();
+			});*/
+			//------------------------------------
+		}
+		//------------------------------------
+		var get_now=function(){
+				var today = new Date();
+				var dd = today.getDate();
+				var mm = today.getMonth()+1; //January is 0!
+
+				var yyyy = today.getFullYear();
+				var hh = today.getHours()
+				var mn = today.getMinutes()
+				var ss = today.getSeconds()
+				if(dd<10){dd='0'+dd;}
+				if(mm<10){mm='0'+mm;}
+				if(mn<10){mn='0'+mn;}
+				if(hh<10){hh='0'+hh;}
+				if(ss<10){ss='0'+ss;}
+				return hh+':'+mn+':'+ss;
+			}
+		//------------------------------------
+	}
+</script>
+<style>
+	#D__ID{
+		height:100%;
+		overflow:auto;
+		animation: vm_module_fadein 1.0s;
+	}
+	#thirdparty_container__ID{
+		overflow: hidden;
+	}
+</style>

@@ -1,0 +1,310 @@
+<div id=thirdparty_container__ID>
+	<div id=instructions__ID style="margin: auto; text-align:center;">
+		<div class="col-12 col-lg-12 col-md-12 col-sm-12 mx-auto formbox ">
+				<div class="row">
+					<div class="col-12">
+					<!-- form start -->
+					<form id="F__ID">
+						<!-- participant name and study id -->
+						<div id="participant_div__ID">
+							<div class="form-group">
+								<fieldset class="subquestions">
+									<label ><span class="">Participant</span>
+										<input type=text name="Participant" class=form-control id=Participant__ID data-id="Participant"/>
+									</label><br>
+									<label ><span class="">Participant ID</span>
+										<input type=text name="Participant_uid" class=form-control  />
+									</label>
+								</fieldset>
+							</div>
+						</div>
+					</form>
+					</div>
+				</div>
+			</div>
+		<div style='margin-top:50px; font-size:x-large; color:rgba(0,0,255,255)'>Using your non-dominant hand on the numeric keyboard, repeatedly tap the five element sequence shown</div>
+		<div style='font-size:x-large; font-weight:bold; color:rgba(0,0,255,255)'>as quickly and accurately as possible</div>
+		<button id=start_button__ID style="margin-top:20px;" class='btn btn-primary btn-lg'>Start</button>
+	</div>
+	<canvas id=main_canvas__ID width=1100 height=300 style="margin: auto; display: block;"></canvas>
+</div>
+<script>
+	function F__ID(){
+		// Ver. 17/10/2019
+		//-------------------------------------
+		VmInclude:__COMPONENT__/f/form.01.js
+		VmInclude:__CURRENT_PATH__/../../library/shared-form.js
+		//-------------------------------------
+		$('#header_0').hide();
+		$('body').css('background','white');
+		var intervals = [];
+		//------------------------------------
+		var this_module=$vm.module_list[$vm.vm['__ID'].name];
+		//Table for previous night test.
+		var tb=this_module.Table2;
+		//------------------------------------
+		$('#D__ID').on('load',function(){
+			$('#header').hide();
+			$('#footer').hide();
+			$('#participant_div__ID').hide()
+			$('#thirdparty_container__ID').css('height',$vm.min_height);
+			third_party("thirdparty_container__ID",data_process);
+
+		})
+		//------------------------------------
+		var calc=function(data){
+			var tt=data.Tapping_Time.split(',');
+            var m=data.Match.split(',');
+            var sn=data.Sequence_Number.split(',');
+			var k=0;
+                    var check=true;
+                    var group=0;
+                    var timing=0;
+                    var correct=[];
+                    var error=[];
+                    var time=[];
+                    var pos=0;
+                    for (var i=1;i<7;i++) {
+                        var r_sn = sn.filter(pp => pp ==i);
+                        //r_sn=sn.slice(pos,pos+parseInt(r_sn.length/5)*5);
+                        var r_tt=tt.slice(pos,pos+parseInt(r_sn.length));
+                        var r_m=m.slice(pos,pos+parseInt(r_sn.length));
+                        var err=0;
+                        var cor=0;
+                        var tim=0;
+                        for(var j=0;j<parseInt(r_sn.length);j++){
+                            var rr_m=r_m.slice(j,(j+1));
+                            var rr_tt=r_tt.slice(j,(j+1));
+                            var c=rr_m.filter(pp => pp =='N')
+                            if(c.length>0) err++;
+                            else {
+                                cor++;
+                                tim+=parseInt(rr_tt);
+                            }
+                        }
+                        error.push(err);
+                        correct.push(cor);
+                        time.push((tim/cor/1000).toFixed(2));
+                        pos+=r_sn.length;
+                    }
+                    data.Correct_1=correct[0];data.Error_1=error[0];data.Time_1=time[0];
+                    data.Correct_2=correct[1];data.Error_2=error[1];data.Time_2=time[1];
+                    data.Correct_3=correct[2];data.Error_3=error[2];data.Time_3=time[2];
+                    data.Correct_4=correct[3];data.Error_4=error[3];data.Time_4=time[3];
+                    data.Correct_5=correct[4];data.Error_5=error[4];data.Time_5=time[4];
+					data.Correct_6=correct[5];data.Error_6=error[5];data.Time_6=time[5];
+					data.ERLS=((parseInt(correct[0])+parseInt(correct[1])+parseInt(correct[2]))/3).toFixed(1);
+					data.LRLS=((parseInt(correct[3])+parseInt(correct[4])+parseInt(correct[5]))/3).toFixed(1);
+					data.ERES=((parseInt(error[0])+parseInt(error[1])+parseInt(error[2]))/3).toFixed(1);
+					data.LRES=((parseInt(error[3])+parseInt(error[4])+parseInt(error[5]))/3).toFixed(1);
+					data.ERRT=((parseFloat(time[0])+parseFloat(time[1])+parseFloat(time[2]))/3).toFixed(2);
+					data.LRRT=((parseFloat(time[3])+parseFloat(time[4])+parseFloat(time[5]))/3).toFixed(2);
+					if(tb!=undefined){
+						var qry={'Data.Participant_uid':$("input[name='Participant_uid']").val()}
+						var post_learning="";
+						jQuery.ajaxSetup({async:false});
+						$vm.request({cmd:"find-s",table:tb,query:qry,options:{}},function(res){
+							if(res.permission==false){
+								alert("No permission");
+								return;
+							}
+							if(res.result.length==0){
+							}
+							else{
+								post_learning=res.result[0].Data.PoTLS
+								console.log("here: "+JSON.stringify(res.result));
+							}
+						})
+						jQuery.ajaxSetup({async:true});
+						if(post_learning!=''){
+							data.OEI=((parseFloat(data.ERLS)/parseFloat(post_learning))*100).toFixed(1);
+							data.OLI=((parseFloat(data.LRLS)/parseFloat(post_learning))*100).toFixed(1);
+						}
+					}
+		}
+		//------------------------------------
+		var ClearIntervals = function()
+		{
+			for (var i=0; i<intervals.lenght; i++)
+			{
+				clearTimeout(intervals[i]);
+			}
+			intervals = [];
+		}
+		//------------------------------------
+		$('#D__ID').on('unload',function(){
+			//alert('unload');
+			ClearIntervals();
+		})
+		//------------------------------------
+		var data_process=function(data){
+			//alert(JSON.stringify(data));
+			calc(data);
+			data.Participant=$('#Participant__ID').val();
+			data.Participant_uid=$("input[name='Participant_uid']").val();
+			data.sysStatus='#00FF00';
+			$vm.request({cmd:"insert",table:m.Table,data:data},function(res){
+				if(res.status=="np"){
+					alert("No permission to insert a new record in to the database.");
+					if(m.input.goback!=undefined){
+						$vm.refresh=1;
+						window.history.go(-1);       //from grid
+					}
+					return;
+				}
+				else { 
+					$vm.refresh=1;
+					window.history.go(-1);
+				}
+			});
+		}
+		//------------------------------------
+		var third_party=function(containerID,callback){
+			$('#instructions__ID').show();
+			ClearIntervals();
+			$('#'+containerID).css('background-color','#ffffff');
+			var canvas = document.getElementById('main_canvas__ID');
+			var ctx = canvas.getContext('2d');
+
+			var repeats = 6;
+			var predelaytime = 5000;
+			var predelaytext = "Please be ready. The task will start shortly.";
+			var postdelaytime = 25000;
+			var postdelaytext = "Relax for a while.";
+			var timelimit = 30000;
+			//var cleardelaytime=50;
+			var repeat = 0
+
+			var sequence = ['4', '1', '3', '2', '4'];
+			var currentSequence = 0;
+			var currentNumber = 0;
+
+			var startTime;
+
+			var width = canvas.width;
+			var height = canvas.height;
+			var midX = width / 2;
+			var midY = height / 2;
+
+			var separation = 60;
+
+			var results = {
+				Match : [],
+				Tapping_Time : [],
+				Sequence_Number : []
+			};
+
+			var sequenceMatch = null;
+
+			var repeatResults = {};
+			ctx.clearRect(0, 0, width, height);
+			ctx.fillStyle = 'rgb(0,0,255)';
+			ctx.textAlign = 'center';
+			ctx.font = '48px arial';
+
+			$(document).keypress(function(e){
+				if ($("#main_canvas__ID").is(':hidden')) //hacky and ugly way :(
+					return;
+				if (currentSequence > 0 && currentNumber < sequence.length)
+				{
+					if (sequence[currentNumber] == e.key)
+					{
+						if (sequenceMatch != 'N')
+							sequenceMatch = 'M';
+					}
+					else
+					{
+						sequenceMatch = 'N';
+					}
+					var left = midX - (separation * sequence.length) / 2;
+					var x = left + currentNumber * separation;
+					ctx.fillStyle = 'rgb(0,0,102)';
+						ctx.beginPath();
+					ctx.arc(x, midY + separation / 2, 20, 0, 2*Math.PI);
+					ctx.fill();
+					currentNumber++;
+
+					if (currentNumber >= sequence.length)
+					{
+						results.Match.push(sequenceMatch);
+						results.Tapping_Time.push(Date.now() - startTime);
+						results.Sequence_Number.push(repeat);
+						ResetSequence();
+					}
+				}
+				e.preventDefault();
+			});
+
+			var ResetSequence = function()
+			{
+				if ($("#main_canvas__ID").is(':hidden')) //hacky and ugly way :(
+					return;
+				ctx.clearRect(0, 0, width, height);
+				ctx.fillStyle = 'rgb(0,0,102)';
+				ctx.font = '64px arial';
+				var left = midX - (separation * sequence.length) / 2;
+				for (var i=0; i<sequence.length; i++)
+				{
+					var x = left + i * separation;
+					ctx.fillText(sequence[i], x, midY - separation / 2);
+				}
+				startTime = Date.now();
+				currentNumber = 0;
+				currentSequence++;
+				sequenceMatch = null;
+			}
+
+			var Start = function()
+			{
+				if ($("#main_canvas__ID").is(':hidden')) //hacky and ugly way :(
+					return;
+				repeat++;
+				ctx.clearRect(0, 0, width, height);
+				ctx.fillStyle = 'rgb(0,0,255)';
+				ctx.font = '48px arial';
+				ctx.fillText(predelaytext, midX, midY);
+				intervals.push(setTimeout(ResetSequence, predelaytime));
+				intervals.push(setTimeout(Finish, predelaytime + timelimit));
+			}
+			var Finish = function()
+			{
+				if ($("#main_canvas__ID").is(':hidden')) //hacky and ugly way :(
+					return;
+				currentSequence = 0;
+				ctx.clearRect(0, 0, width, height);
+				if (repeat < repeats)
+				{
+					ctx.fillStyle = 'rgb(0,0,255)';
+					ctx.font = '48px arial';
+					ctx.fillText(postdelaytext, midX, midY);
+					intervals.push(setTimeout(Start, postdelaytime));
+				}
+				else
+				{
+					results.Match = results.Match.join(",");
+					results.Tapping_Time = results.Tapping_Time.join(",");
+					results.Sequence_Number = results.Sequence_Number.join(",");
+					callback(results);
+				}
+			}
+
+			$('#start_button__ID').on('click',function(){
+				$('#instructions__ID').hide();
+				$('#participant_div__ID').css("visibility", "hidden");
+				Start();
+			});
+			//------------------------------------
+		}
+		//------------------------------------
+	}
+</script>
+<style>
+	#D__ID{
+		height:100%;
+		overflow:auto;
+		animation: vm_module_fadein 1.0s;
+	}
+	#thirdparty_container__ID{
+		overflow: hidden;
+	}
+</style>

@@ -25,6 +25,17 @@
         //-------------------------------------
         _before_submit=function(record,dbv){
             return _set_status_and_participant(record,dbv);
+
+					var v1 = parseInt($('#tb__ID').find('input[name=ODI_night1]:checked').val());
+					var v2 = parseInt($('#tb__ID').find('input[name=ODI_night2]:checked').val());
+					var v3 = parseInt($('#tb__ID').find('input[name=ODI_night3]:checked').val());
+
+					var v4 = (v1+v2+v3/3) ;
+					_records[I].ODI_average = v4;
+					return true;
+
+
+
         }
         //-------------------------------------
     }

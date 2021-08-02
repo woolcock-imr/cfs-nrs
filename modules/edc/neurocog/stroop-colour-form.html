@@ -1,0 +1,293 @@
+<div id=thirdparty_container__ID>
+	<div class="col-12 col-lg-12 col-md-12 col-sm-12 mx-auto formbox">
+		<div class="row">
+			<div class="col-12">
+			<!-- form start -->
+			<form id="F__ID">
+				<!-- participant name and study id -->
+				<div id="participant_div__ID">
+					<div class="form-group">
+						<fieldset class="subquestions">
+							<label ><span class="">Participant</span>
+								<input type=text name="Participant" class=form-control id=Participant__ID data-id="Participant"/>
+							</label><br>
+							<label ><span class="">Participant ID</span>
+								<input type=text name="Participant_uid" class=form-control readonly />
+							</label>
+						</fieldset>
+					</div>
+				</div>
+			</form>
+			</div>
+		</div>
+	</div>
+	<div id=instructions__ID class="container">
+		<div class="row row__ID">
+			<div class="col-sm" >
+				This task measures reaction time to colours and words.<br>
+				Three different coloured squares will be displayed at the bottom of the screen.<br>
+				<u><b>Click</b></u> on the coloured square that matches the <b>COLOUR</b> (red, blue or green) of the word above.<br><br>
+				<p>Example</p>
+				<img src="__CURRENT_PATH__/image_col.jpg"  width="155" height="128"> <br><br></br>
+				<p><i><b>If<font color="#0000FF" > RED </font>appears you would select the <u>blue</u> box as shown</b></i></p>
+				Your responses will be timed.<br>
+				Accuracy is as important as speed in this task.<br>
+				To begin, please click on the <button id=start_button__ID class='btn btn-primary btn-lg'>Start</button> button.
+			</div>
+		</div>
+
+	</div>
+	<canvas id=main_canvas__ID width=600 height=300 style="margin: auto; display: block;"></canvas>
+</div>
+<script>
+	function F__ID(){
+		//-------------------------------------
+		VmInclude:__COMPONENT__/f/form.01.js
+		VmInclude:__CURRENT_PATH__/../../library/shared-form.js
+		//-------------------------------------
+		var intervals = [];
+		$('#header_0').hide();
+		$('body').css('background','white');
+		//------------------------------------
+		var this_module=$vm.module_list[$vm.vm['__ID'].name];
+		//------------------------------------
+		$('#D__ID').on('load',function(){
+			$('#header').hide();
+			$('#footer').hide();
+			$('#participant_div__ID').hide()
+			$('#thirdparty_container__ID').css('height',$vm.min_height);
+			third_party("thirdparty_container__ID",data_process);
+		})
+		//------------------------------------
+        var calc=function(data){
+    	    var rt=data.IndivRT.split(",");
+			var res=data.Result.split(",");
+            var corr=0;
+            var react=0.0;
+            for (var i=0;i<rt.length;i++){
+    	        react=react+parseInt(rt[i]);
+    	        if(res[i]=='C') corr++;
+            }
+            data.TotalResponses=rt.length.toString();
+            data.CorrectResponses=corr.toString();
+            data.PercentCorrect=(100*corr/rt.length).toFixed(1);
+            data.WrongResponses=(rt.length-corr).toString();
+            data.PercentWrong=(100*(rt.length-corr)/rt.length).toFixed(1);
+            data.TotalTestTime=(data.timelimit/1000).toString();
+			data.MeanRT=(react/rt.length*0.001).toFixed(3);
+    	}
+		//------------------------------------
+		var ClearIntervals = function()
+		{
+			for (var i=0; i<intervals.lenght; i++)
+			{
+				clearTimeout(intervals[i]);
+			}
+			intervals = [];
+		}
+		//------------------------------------
+		$('#D__ID').on('unload',function(){
+			//alert('unload');
+			ClearIntervals();
+		})
+		//------------------------------------
+		var data_process=function(data){
+			//alert(JSON.stringify(data));
+			calc(data);
+			data.Participant=$('#Participant__ID').val();
+			data.Participant_uid=$("input[name='Participant_uid']").val();
+			data.sysStatus='#00FF00';
+			$vm.request({cmd:"insert",table:m.Table,data:data},function(res){
+				if(res.status=="np"){
+					alert("No permission to insert a new record in to the database.");
+					if(m.input.goback!=undefined){
+						$vm.refresh=1;
+						window.history.go(-1);       //from grid
+					}
+					return;
+				}
+				else { 
+					$vm.refresh=1;
+					window.history.go(-1);
+				}
+			});
+			//--------------------------------------------------------
+		}
+		//------------------------------------
+		var third_party=function(containerID,callback){
+			$('#instructions__ID').show();
+			ClearIntervals();
+			$('#'+containerID).css('background-color','#ffffff');
+			var canvas = document.getElementById('main_canvas__ID');
+			var ctx = canvas.getContext('2d');
+			var colors = ['red', 'lime', 'blue'];
+			var pairs = [
+				['RED', 'lime'],['RED', 'blue'],
+				['GREEN', 'red'],['GREEN', 'blue'],
+				['BLUE', 'red'],['BLUE', 'lime']];
+
+			var pair = [];
+			var timelimit = 45000;
+			//------------------------------------
+			var startTime;
+			//var StartTime;
+			var width = canvas.width;
+			var height = canvas.height;
+			var midX = width / 2;
+			var midY = height / 2;
+			var separation = 90;
+			var results = {
+				Result : [],
+				IndivRT : [],
+				ShownColour : [],
+				ShownText : [],
+				ResponseColour : [],
+				timelimit,
+				StartTime : ""
+			};
+
+			var rects = [];
+			ctx.clearRect(0, 0, width, height);
+			ctx.textAlign = 'center';
+			var NextPair = function()
+			{
+				var oldPair=pair;
+				while(oldPair==pair){
+					pair = pairs[Math.floor(Math.random() * pairs.length)];
+				}
+				startTime = Date.now();
+				ctx.clearRect(0, 0, width, height);
+				ctx.fillStyle = pair[1];
+				ctx.font = '64px arial';
+				ctx.fillText(pair[0], midX, midY - separation / 2);
+
+				var left = midX - (separation * (colors.length - 1)) / 2;
+				rects = [];
+				for (var i=0; i<colors.length; i++)
+				{
+					ctx.fillStyle = colors[i];
+					ctx.beginPath();
+					var x = left + i * separation;
+					var y = midY + separation / 2;
+					var halfSize = separation / 3;
+					var r =
+					{
+					x: x - halfSize, y: y - halfSize, width: halfSize * 2, height: halfSize * 2, color:colors[i]
+					}
+					rects.push(r);
+					ctx.rect(r.x, r.y, r.width, r.height);
+					ctx.fill();
+				}
+			}
+			var Start = function()
+			{
+				$('#participant_div__ID').css("visibility", "hidden");
+				if ($("#main_canvas__ID").is(':hidden')) //hacky and ugly way :(
+					return;
+				intervals.push(setTimeout(Finish, timelimit));
+				results.StartTime=get_now();
+				NextPair();
+			}
+			var Finish = function()
+			{
+				if ($("#main_canvas__ID").is(':hidden')) //hacky and ugly way :(
+					return;
+				currentSequence = 0;
+				ctx.clearRect(0, 0, width, height);
+				{
+					results.Result = results.Result.join(",");
+					results.IndivRT = results.IndivRT.join(",");
+					results.ShownColour = results.ShownColour.join(",");
+					results.ShownColour = results.ShownColour.replace(/red/g,"RED").replace(/lime/g,"GREEN").replace(/blue/g,"BLUE");
+					results.ShownText = results.ShownText.join(",");
+					results.ResponseColour = results.ResponseColour.join(",");
+					results.ResponseColour = results.ResponseColour.replace(/red/g,"RED").replace(/lime/g,"GREEN").replace(/blue/g,"BLUE");
+					callback(results);
+				}
+			}
+			$('#start_button__ID').on('click',function(){
+				$('#instructions__ID').hide();
+				Start();
+			});
+			function getXY(canvas, event)
+			{
+				const rect = canvas.getBoundingClientRect()
+				const y = event.clientY - rect.top
+				const x = event.clientX - rect.left
+				return {x:x, y:y}
+			}
+			$("#main_canvas__ID").click(function(e)
+			{
+				if ($("#main_canvas__ID").is(':hidden')) //hacky and ugly way :(
+					return;
+				const XY = getXY(canvas, e)
+				var x = XY.x;
+				var y = XY.y;
+
+				for (var i=0; i<rects.length; i++)
+				{
+					var r = rects[i];
+					if (x > r.x && x < r.x + r.width && y > r.y && y < r.y + r.height)
+					{
+						results.Result.push(pair[1] == r.color ? 'C' : 'W');
+						results.IndivRT.push(Date.now() - startTime);
+						results.ShownColour.push(pair[1]);
+						results.ShownText.push(pair[0]);
+						results.ResponseColour.push(r.color);
+						NextPair();
+					}
+				}
+			});
+
+			$("#main_canvas__ID").mousemove(function(e)
+			{
+				if ($("#main_canvas__ID").is(':hidden')) //hacky and ugly way :(
+					return;
+				const XY = getXY(canvas, e)
+				var x = XY.x;
+				var y = XY.y;
+
+				canvas.style.cursor = 'inherit';
+				for (var i=0; i<rects.length; i++)
+				{
+					var r = rects[i];
+					if (x > r.x && x < r.x + r.width && y > r.y && y < r.y + r.height)
+					{
+						canvas.style.cursor = 'pointer';
+					}
+
+				}
+			});
+			//------------------------------------
+			var get_now=function(){
+                 var today = new Date();
+                 var dd = today.getDate();
+                 var mm = today.getMonth()+1; //January is 0!
+
+				 var yyyy = today.getFullYear();
+				 var hh = today.getHours()
+				 var mn = today.getMinutes()
+				 var ss = today.getSeconds()
+                 if(dd<10){dd='0'+dd;}
+                 if(mm<10){mm='0'+mm;}
+                 if(mn<10){mn='0'+mn;}
+                 if(hh<10){hh='0'+hh;}
+                 if(ss<10){ss='0'+ss;}
+                 return hh+':'+mn+':'+ss;
+             }
+             //-------------------------------------
+
+		}
+		//------------------------------------
+	}
+</script>
+<style>
+	#D__ID{
+		height:100%;
+		overflow:auto;
+		animation: vm_module_fadein 1.0s;
+	}
+	#thirdparty_container__ID{
+		overflow: hidden;
+	}
+</style>
