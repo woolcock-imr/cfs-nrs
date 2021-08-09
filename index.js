@@ -87,7 +87,7 @@ var vm_init=function(){
 }
 	//--------------------------------------------------------
 	var load_js=function(url,next){
-        //this is js loader
+        //this is js	 loader
 		var ver=localStorage.getItem(url+"_ver");
 		var txt=localStorage.getItem(url+"_txt");
 		//------------------------------------------
@@ -146,6 +146,8 @@ var vm_init=function(){
 			$vm.js_popper=1;
 			$.getScript('https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js',function(){
 				$vm.js_bootstrap=1;
+				$.getScript('https://maxcdn.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js', function () {
+				});
 			});
 		});
 		$.getScript('https://ajax.aspnetcdn.com/ajax/jquery.ui/1.12.1/jquery-ui.min.js',function(){$vm.js_jquery_ui=1;});

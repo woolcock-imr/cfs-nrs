@@ -1,3 +1,5 @@
+<section>
+ </section>
 <div id=thirdparty_container__ID>
 	<div style="margin : auto; width : 1100px; font-size : x-large; line-height: 2">
 		<div class="col-12 col-lg-12 col-md-12 col-sm-12 mx-auto formbox">
@@ -90,11 +92,8 @@
 <script>
 	function F__ID(){
 		//-------------------------------------
-			
-		    VmInclude: __COMPONENT__/grid/form.v3.js
-        VmInclude: __CURRENT_PATH__/task.form.js
-        _json = '';
-		VmInclude:__CURRENT_PATH__/shared-form.js
+        VmInclude:__CURRENT_PATH__/form.01.js
+    		VmInclude:__CURRENT_PATH__/task-form.js
 		//-------------------------------------
 		$('#content').css('padding-top','0');
 		$('#header_0').hide();
@@ -143,7 +142,8 @@
 		}
 		//------------------------------------
 		var data_process=function(data){
-			//alert(JSON.stringify(data));
+		
+			//alert(JSON.stringify(data));		
 			calc(data)
 			data.Participant=$('#Participant__ID').val();
 			data.Participant_uid=$("input[name='Participant_uid']").val();
@@ -182,7 +182,8 @@
 								"#instructions_6__ID",
 								"#instructions_7__ID",
 								];
-			var timelimit = 60000;
+			// var timelimit = 60000;
+			var timelimit=5000;
 			var timeLimits = [
 								timelimit,
 								timelimit,
@@ -497,6 +498,7 @@
 			});
 			$('.stop-button').on('click',function(){
 				Finish();
+				alert("complete")
 			});
 			//------------------------------------
 		}

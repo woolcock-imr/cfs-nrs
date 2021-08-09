@@ -39,10 +39,10 @@
 		"Screening_ISI":{"table_id":"91000881","url":"modules/edc/task/isi-data.html","name_for_search":"Insomnia Severity Index","form_module":"Screening_ISI_form","task":"Screening ISI"},
 		"Screening_ISI_form":{"table_id":"91000881","url":"modules/edc/task/isi-form.html"},
 		"Screening_wristox":{"table_id":"91000879","url":"modules/edc/task/wristox-data.html","name_for_search":"wristox","task":"Screening wristox"},
-		"screening_ffs":{"table_id":" 23479823749827389432","url":"modules/edc/task/Flinders.html","name_for_search":"Flinder's Fatigue Scale","form_module":"screening_ffs_form","task":"Screening Flinder's Fatigue Scale"},
-		"screening_ffs_form":{"table_id":"23479823749827389432","url":"modules/edc/task/Flinders_form.html"},
-		"screening_hs":{"table_id":"23479823749827389432","url":"modules/edc/task/hyperarousal_scale.html","name_for_search":"Hyperarousal Scale","form_module":"screening_hs_form","task":"Screening Hyperarousal Scale"},
-		"screening_hs_form":{"table_id":"23479823749827389432","url":"modules/edc/task/hyperarousal_scale_f.html"},
+		"screening_ffs":{"table_id":"91000907","url":"modules/edc/task/Flinders.html","name_for_search":"Flinder's Fatigue Scale","form_module":"screening_ffs_form","task":"Screening Flinder's Fatigue Scale"},
+		"screening_ffs_form":{"table_id":"91000907","url":"modules/edc/task/Flinders_form.html"},
+		"screening_hs":{"table_id":"91000908","url":"modules/edc/task/hyperarousal_scale.html","name_for_search":"Hyperarousal Scale","form_module":"screening_hs_form","task":"Screening Hyperarousal Scale"},
+		"screening_hs_form":{"table_id":"91000908","url":"modules/edc/task/hyperarousal_scale_f.html"},
 
 		
 		"RSQ_D":{"table_id":"20010405","url":"modules/edc/task/RSQ_D.html","name_for_search":"Restorative Sleep Questionnaire (Daily)","form_module":"RSQ_D_Form","task":"Restorative Sleep Questionnaire_ Daily"},
@@ -111,13 +111,13 @@
 		"NightVisit_Memorytask_Fileupload":{"table_id":"20011129","url":"modules/edc/task/Memtest.html","name_for_search":"Evening Memory task tests"},
 		"wordpairs_scores": {"table_id":"20011129","url":"modules/edc/task/wordpair_score.html"},
 		"pasat_scores": {"table_id":"20010417","url":"modules/edc/task/pasat.html"},
-		"visit_anthro": {"table_id":"-------","url":"modules/edc/task/Anthro.html"},
+		"visit_anthro": {"table_id":"91000909","url":"modules/edc/task/Anthro.html"},
 		
-		"new-lct-data": 						{"table_id":"91000185","url":"modules/edc/neurocog/letter-cancellation-data.html","form_module":"new-lct-form","quest_module":"new-lct-form"},
+		"new-lct-data": 						{"table_id":"91000185","url":"modules/edc/neurocog/letter-cancellation-data.html","form_module":"new-lct-form","quest_module":"new-lct-form","router":1},
 		"new-lct-form":							{"table_id": "91000185","url":"modules/edc/neurocog/letter-cancellation-form.html"},
-		"participant":	  {"table_id":"20010378","url":"/modules/participant-and-others/task/participant.html", "name_for_search":"Participant",
-											"participant_id": {"field1": "Subject_ID","field2": "Subject_Initials"}
-											},
+		"participant":						  {"table_id":"20010378","url":"/modules/participant-and-others/task/participant.html", "name_for_search":"Participant",
+																"participant_id":{"field1":"participant_uid"}
+																},
 		"edc-notes":	  {"table_id":"20010379","url":"/modules/participant-and-others/task/edc-notes.html", "name_for_search":"EDC notes"},
 		"login-setup":	  {"table_id":"20010380","url":"/modules/participant-and-others/task/participant-login-setup.html", "name_for_search":"Login setup"},
 	
@@ -130,8 +130,8 @@
 		 		{"table_id":"20010401","task_name":"Screening Depression Anxiety Stress Scale"},
 				{"table_id":"20010403","task_name":"Screening Epworth Sleepiness Scale (ESS)"},
 				{"table_id":"91000881","task_name":"Screening Insomnia Severity Index"},
-				{"table_id":"23479823749827389432","task_name":"Screening Flinder's Fatigue Scale"},
-				{"table_id":"23479823749827389432","task_name":"Screening Hyperarousal Scale"},
+				{"table_id":"91000907","task_name":"Screening Flinder's Fatigue Scale"},
+				{"table_id":"91000908","task_name":"Screening Hyperarousal Scale"},
 		 		{"table_id":"20010399","task_name":"Screening Multidimensional Fatigue Symptom Inventory"},
 		 		{"table_id":"20010400","task_name":"Screening Pittsburgh Sleep Quality Index (PSQI)"},
 		 		{"table_id":"20010405","task_name":"Screening Short form Health Survey"}

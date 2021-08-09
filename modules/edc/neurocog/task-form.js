@@ -1,4 +1,27 @@
+
+// var prefix = $vm.module_list[$vm.vm['__ID'].name].prefix; if (prefix == undefined) prefix = "";
+alert("We starting Task-form now")
+
+alert('__ID')
+var m = $vm.module['__ID'];
 var prefix=$vm.module_list[$vm.vm['__ID'].name].prefix; if(prefix==undefined) prefix="";
+// m.module = $vm.module_list[m.name];
+m = {};
+m.name = $vm.vm['__ID'].name;
+//m.input=$vm.vm['__ID'].input; //?
+m.preload = m.module.preload;
+m.prefix = m.module.prefix; if (m.prefix == undefined) m.prefix = "";
+m.form_module = m.prefix + m.module.form_module;
+m.db_pid = m.module.table_id;
+if (m.prefix == undefined) m.prefix = "";
+//-------------------------------------
+// /*
+if ($vm.module == undefined) $vm.module = {};
+
+m.db_pid = m.Table;
+m.qid = m.module.qid;
+// if (m.qid == undefined)
+// 	m.qid = $vm.qid;
 //-------------------------------------
 var participant_pid=$vm.module_list[prefix+'participant'].table_id;
 var sql_participant="@('Subject_Initials')+' '+@('Gender')+' '+@('DOB')";
