@@ -115,7 +115,7 @@ var vm_init=function(){
 		text=text.replace(/__HOST__\//g,$vm.hosting_path+'/');
 		text=text.replace(/__VER__/g,$vm.ver[0]);
         if(location.hostname=='127.0.0.1' || location.hostname=='localhost')  text=text.replace(/__COMPONENT__\//g,host+'/vmiis/component/');
-        // else text=text.replace(/__COMPONENT__\//g,'https://vmiis.github.io/component-s/');
+        else text=text.replace(/__COMPONENT__\//g,'https://vmiis.github.io/component-s/');
 		if(window.location.toString().indexOf('_d=1')!=-1){
             //use local system files
 			text=text.replace(/https:\/\/vmiis.github.io\/api/g,host+'/vmiis/api');
@@ -157,7 +157,7 @@ var vm_init=function(){
 		$.getScript('https://www.gstatic.com/charts/loader.js',function(){
 			google.charts.load('current', {packages: ['corechart']});
 		});
-		$vm.module_list['_system_export_dialog_module']={table_id:'',url:$vm.url('__COMPONENT__/d/export_dialog_module.html')};
+		$vm.module_list['_system_export_dialog_module']={table_id:'',url:$vm.url('__COMPONENT__/dialog/export_dialog_module.html')};
         $vm.load_module_by_name('_system_export_dialog_module','',{})
         //-------------------------------------
         // $vm.module_list['_system_import_dialog_module']={table_id:'',url:$vm.url('__COMPONENT__/d/import_dialog_module.html')};
