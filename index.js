@@ -115,7 +115,7 @@ var vm_init=function(){
 		text=text.replace(/__HOST__\//g,$vm.hosting_path+'/');
 		text=text.replace(/__VER__/g,$vm.ver[0]);
         if(location.hostname=='127.0.0.1' || location.hostname=='localhost')  text=text.replace(/__COMPONENT__\//g,host+'/vmiis/component/');
-        else text=text.replace(/__COMPONENT__\//g,'https://vmiis.github.io/component-s/');
+        else text=text.replace(/__COMPONENT__\//g,'https://vmiis.github.io/component/');
 		if(window.location.toString().indexOf('_d=1')!=-1){
             //use local system files
 			text=text.replace(/https:\/\/vmiis.github.io\/api/g,host+'/vmiis/api');
