@@ -8,7 +8,8 @@
         _json='';
         VmInclude:__CURRENT_PATH__/task.js
         //-------------------------------------
-        _task_fields="Height_cm,Weight_kg,BMI,Waist_cm,Neck_cm,Head_cm,Hip_cm,BP1_sys_dia";
+        _task_fields="Height_cm,Weight_kg,BMI",
+        //,Waist_cm,Neck_cm,Head_cm,Hip_cm,BP1_sys_dia";
         _fields="_Form,Status|S2,Notes|NT,Participant,"+_task_fields;
         _fields+=",Submit Date|DateTime,Submitted by|Author,_Delete,_Hidden|Participant_uid";
         _grid_to_form_parameters={task_fields:_task_fields};
@@ -19,14 +20,18 @@
         _cell_render=function(records,I,field,td,set_value,source){
             _default_cell_render(records,I,field,td,set_value,source);
             switch(field){
-                case 'XXX':
+                case 'BMI':
+                    records[I].vm_readonly[field]=true;
                     break;
             }
         }
+        // kg/m2
         //-------------------------------------
         _before_submit=function(record,dbv){
+            record.BMI=(parseInt(record.Weight_kg)/((parseInt(record.Height_cm)/100)^2)).toFixed(2);
             return _set_status_and_participant(record,dbv);
         }
+
         //-------------------------------------
     }
 </script>

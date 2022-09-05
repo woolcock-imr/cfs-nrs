@@ -78,8 +78,8 @@
 
 		"Morning_visit_KDT":{"table_id":"20010413","url":"modules/edc/task/KDT.html","name_for_search":"Baseline Start Karolinska Drowsiness Test (KDT)"},
 		"Morning_ERP":{"table_id":"20010415","url":"modules/edc/task/ERP.html","name_for_search":"Morning Event Related Potential","form_module":"Morning_ERP","task":"Morning Event Related Potential"},
-		"Morning_PASAT":{"table_id":"20010417","url":"modules/edc/task/PASAT.html","name_for_search":"Morning Paced Auditory Serial Addition Test","form_module":"Morning_PASAT","task":"Morning Paced Auditory Serial Addition Tests (PASAT)"},
-		"Morning_PASAT_Form":{"table_id":"20010417","url":"modules/edc/task/PASAT_form.html"},
+		"Morning_PASAT":{"table_id":"20010417","url":"modules/edc/task/pasat.html","name_for_search":"Morning Paced Auditory Serial Addition Test","form_module":"Morning_PASAT","task":"Morning Paced Auditory Serial Addition Tests (PASAT)"},
+		"Morning_PASAT_Form":{"table_id":"20010417","url":"modules/edc/task/pasat_form.html"},
 		"Morning_BloodSaliva":{"table_id":"20010419","url":"modules/edc/task/Bloodsaliva.html","name_for_search":"Morning Blood and Saliva Samples"},
 		"Morning_MRI":{"table_id":"20010420","url":"modules/edc/task/MRI.html","name_for_search":"Magnetic Resonance Imagining (MRI)"},
 		"Morning_KDT":{"table_id":"91000187","url":"modules/edc/task/KDT.html"},
