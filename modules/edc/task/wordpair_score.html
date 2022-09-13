@@ -5,26 +5,53 @@
     function F__ID(){
         //-------------------------------------
         VmInclude:__COMPONENT__/grid/grid.v3.js
-
-        VmInclude:__CURRENT_PATH__/task-data.js
+        _json='';
+        VmInclude:__CURRENT_PATH__/task.js
         //-------------------------------------
-        _task_fields="Set,Document,recall_1,recall_2,recall_3,recall_4,recog_1,Location";
-        _fields="_Form,Status|S3,Notes|NT,Participant,"+_task_fields;
+        // _task_fields="Set,Document,recall_1,recall_2,recall_3,recall_4,recog_1,";
+        _task_fields="Document|File_Name,Trial_1_Score,Trial_2_Score,Trial_3_Score,Evening_Recall_Total,Evening_Related_Recall,Evening_Unrelated_Recall";
+        _task_fields+=",Morning_Recall,Morning_Recognition,Morning_Recall_Total,Morning_Related_Recall,Morning_Unrelated_Recall,Morning_Related_Recognition,Morning_Unrelated_Recognition";
+        _task_fields+=",Recall_Change_Total,Recall_Change_Related,Recall_Change_Unrelated,Overnight_Retention_Total,Overnight_Retention_Related,Overnight_Retention_Unrelated";
+        _fields="_Form,Notes|NT,Participant,"+_task_fields;
         _fields+=",Submit Date|DateTime,Submitted by|Author,_Delete,_Hidden|Participant_uid";
         //-------------------------------------
         $('#D__ID').on('load',function(){    _set_req(); _request_data(); })
         $('#D__ID').on('back',function(){    _set_req(); _request_data(); })
+        //-------------------------------------
+    
         //-------------------------------------
         _cell_render=function(records,I,field,td,set_value,source){
             _default_cell_render(records,I,field,td,set_value,source);
             switch(field){
                 case 'Document':
                     VmInclude:__PARTS__/grid/field_file.js
+                case 'Recall_Change_Total':
+                    records[I].vm_readonly[field]=true;
+                case 'Recall_Change_Related':
+                    records[I].vm_readonly[field]=true;
+                case 'Recall_Change_Unrelated':
+                    records[I].vm_readonly[field]=true;
+                case 'Overnight_Retention_Total':
+                    records[I].vm_readonly[field]=true;
+                case 'Overnight_Retention_Related':
+                    records[I].vm_readonly[field]=true;
+                case 'Overnight_Retention_Unrelated':
+                    records[I].vm_readonly[field]=true;
+                
                 break;
+                
 							}		
 						}
         //-------------------------------------
         _before_submit=function(record,dbv){
+            record.Recall_Change_Total=(parseInt(record.Morning_Recall_Total)-parseInt(record.Evening_Recall_Total)).toFixed(1);
+            record.Overnight_Retention_Total=(parseInt(record.Morning_Recall_Total)/parseInt(record.Evening_Recall_Total)*100).toFixed(1);
+            record.Recall_Change_Related=(parseInt(record.Morning_Related_Recall)-parseInt(record.Evening_Related_Recall)).toFixed(1);
+            record.Overnight_Retention_Related=(parseInt(record.Morning_Related_Recall)/parseInt(record.Evening_Related_Recall)*100).toFixed(1);
+            record.Recall_Change_Unrelated=(parseInt(record.Morning_Unrelated_Recall)-parseInt(record.Evening_Unrelated_Recall)).toFixed(1);
+            record.Overnight_Retention_Unrelated=(parseInt(record.Morning_Unrelated_Recall)/parseInt(record.Evening_Unrelated_Recall)*100).toFixed(1);
+
+             
             return _set_status_and_participant(record,dbv);
         }
         //-------------------------------------
