@@ -11,7 +11,7 @@
         _task_fields="hs_1,hs_2,hs_3,hs_4,hs_5,hs_6,hs_7,hs_8,hs_9,hs_10,hs_11,hs_12,hs_13,hs_14,hs_15,hs_16,hs_17,hs_18,hs_19,hs_20,hs_21,hs_22,hs_23,hs_24,hs_25,hs_26";
         _fields="_Form|form_module,Status|S2,Notes|NT,Participant,"+_task_fields;
         _fields+=",Submit Date|DateTime,Submitted by|Author,_Delete,_Hidden|Participant_uid";
-        _grid_to_form_parameters={task_fields:_task_fields};
+        // _grid_to_form_parameters={task_fields:_task_fields};
         //-------------------------------------
         $('#D__ID').on('load',function(){  _set_req(); _request_data(); })
         $('#D__ID').on('back',function(){  _set_req(); _request_data(); })
