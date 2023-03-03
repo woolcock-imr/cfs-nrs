@@ -59,7 +59,7 @@ _set_req=function(){
 }
 //-------------------------------------
 _set_req_export=function(i1,i2){
-    _fields_e="Participant ID|ParticipantUID,Participant,"+_task_fields
+    _fields_e="Participant ID|ParticipantUID,Participant,"+_task_fields+",Submit Date|DateTime,Submitted by|Author"
     var sql="with participant as (select Site=S1,ParticipantUID=UID,sql_participant="+sql_participant+" from [FORM-"+participant_pid+"]"+site_sql_where+" )";
     sql+=",task as (select ID,UID,PUID,S3,Information,DateTime,Author from [FORM-"+_db_pid+"-@S1])";
     sql+=",records as (select ID,ParticipantUID,Site,Information,Participant=sql_participant,DateTime,Author,RowNum=row_number() over (order by ID DESC) from participant left join task on PUID=ParticipantUID)";
